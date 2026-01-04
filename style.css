@@ -2798,10 +2798,11 @@ header {
     /* Match avatar height to vertical problems - using direct class on parent */
     .problem-display.vertical-format .mobile-avatar {
         min-height: 120px !important;
+        flex: 0 0 95px !important; /* Increase width to fit 90px avatar */
     }
 
     /* Scale up avatar image for vertical format problems - using direct class on parent */
-    .problem-display.vertical-format .mobile-avatar .avatar-image {
+    .problem-display.vertical-format .mobile-avatar .avatar-container .avatar-image {
         width: 90px !important;
         height: 90px !important;
     }
@@ -2809,9 +2810,10 @@ header {
     /* Fallback for :has() selector (for browsers that support it) */
     .problem-display:has(.problem-text.vertical-format) .mobile-avatar {
         min-height: 120px !important;
+        flex: 0 0 95px !important; /* Increase width to fit 90px avatar */
     }
 
-    .problem-display:has(.problem-text.vertical-format) .mobile-avatar .avatar-image {
+    .problem-display:has(.problem-text.vertical-format) .mobile-avatar .avatar-container .avatar-image {
         width: 90px !important;
         height: 90px !important;
     }
