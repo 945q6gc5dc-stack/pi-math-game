@@ -3309,8 +3309,8 @@ header {
    LANDSCAPE ORIENTATION LOCK - MOBILE DEVICES ONLY
    ============================================================================ */
 
-/* Landscape orientation warning overlay for mobile devices (≤900px) */
-@media screen and (max-width: 900px) and (orientation: landscape) {
+/* Landscape orientation warning overlay for mobile devices and tablets (≤900px) */
+@media (max-width: 900px) and (orientation: landscape) {
     /* Hide main content in landscape */
     .container {
         display: none !important;
