@@ -2789,7 +2789,7 @@ header {
     .mobile-avatar {
         display: flex !important;
         flex-direction: column;
-        justify-content: center; /* Vertically center avatar content */
+        justify-content: space-between; /* Push avatar to top, progress to bottom */
         flex: 0 0 80px; /* Fixed 80px width */
         padding: 4px;
         margin: 0;
@@ -2806,7 +2806,9 @@ header {
     /* Scale up avatar image for vertical format problems - using direct class on parent */
     .problem-display.vertical-format .mobile-avatar .avatar-container .avatar-image {
         width: 90px !important;
-        height: 90px !important;
+        height: 100% !important; /* Fill container height */
+        max-height: 110px !important; /* Account for progress text space */
+        object-fit: contain !important;
     }
 
     /* Fallback for :has() selector (for browsers that support it) */
@@ -2817,14 +2819,19 @@ header {
 
     .problem-display:has(.problem-text.vertical-format) .mobile-avatar .avatar-container .avatar-image {
         width: 90px !important;
-        height: 90px !important;
+        height: 100% !important; /* Fill container height */
+        max-height: 110px !important; /* Account for progress text space */
+        object-fit: contain !important;
     }
 
     .mobile-avatar .avatar-container {
-        height: auto; /* Let content determine height */
+        height: 100%; /* Fill parent height */
         max-width: 100%;
         min-height: auto;
         margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Avatar at top, progress at bottom */
     }
 
     .mobile-avatar .avatar-image {
