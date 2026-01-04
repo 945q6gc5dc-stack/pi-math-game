@@ -2801,7 +2801,7 @@ header {
     }
 
     /* Scale up avatar image for vertical format problems - using direct class on parent */
-    .problem-display.vertical-format .mobile-avatar .avatar-image {
+    .problem-display.vertical-format .mobile-avatar .avatar-container .avatar-image {
         width: 90px !important;
         height: 90px !important;
     }
@@ -2811,7 +2811,7 @@ header {
         min-height: 120px !important;
     }
 
-    .problem-display:has(.problem-text.vertical-format) .mobile-avatar .avatar-image {
+    .problem-display:has(.problem-text.vertical-format) .mobile-avatar .avatar-container .avatar-image {
         width: 90px !important;
         height: 90px !important;
     }
