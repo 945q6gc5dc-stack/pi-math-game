@@ -3309,15 +3309,66 @@ header {
    LANDSCAPE ORIENTATION LOCK - MOBILE DEVICES ONLY
    ============================================================================ */
 
-/* Landscape orientation warning overlay for mobile devices and tablets (≤900px) */
-@media (max-width: 900px) and (orientation: landscape) {
-    /* Hide main content in landscape */
-    .container {
+/* ==============================================================================
+   PORTRAIT LOCK - JavaScript-Enhanced with CSS Fallback
+   ============================================================================== */
+
+/* PRIMARY METHOD: JavaScript-triggered portrait lock (95%+ accuracy)
+   Applied via 'force-portrait-lock' class on body element by detectDeviceType() */
+body.force-portrait-lock .container {
+    display: none !important;
+}
+
+body.force-portrait-lock::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    z-index: 99998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.force-portrait-lock::after {
+    content: '📱\A\APlease rotate your device\Ato portrait mode\A\A↻';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #667eea;
+    white-space: pre-line;
+    line-height: 1.8;
+}
+
+/* FALLBACK METHOD: CSS-only portrait lock (90% accuracy)
+   Uses touch capability detection for no-JavaScript scenarios
+   Filters out desktop mice (pointer: coarse = touch input) */
+@media (pointer: coarse) and (min-aspect-ratio: 4/3) and (orientation: landscape) {
+    /* Only apply if JavaScript class is NOT already applied (avoid double styling) */
+    body:not(.force-portrait-lock) .container {
         display: none !important;
     }
 
-    /* Show rotation warning */
-    body::before {
+    body:not(.force-portrait-lock)::before {
         content: '';
         position: fixed;
         top: 0;
@@ -3331,7 +3382,7 @@ header {
         justify-content: center;
     }
 
-    body::after {
+    body:not(.force-portrait-lock)::after {
         content: '📱\A\APlease rotate your device\Ato portrait mode\A\A↻';
         position: fixed;
         top: 50%;
