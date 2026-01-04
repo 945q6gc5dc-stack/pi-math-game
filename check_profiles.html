@@ -1,0 +1,13 @@
+
+<!DOCTYPE html>
+<html>
+<head><title>Check LocalStorage</title></head>
+<body>
+<h1>Profile Data Inspector</h1>
+<pre id="output"></pre>
+<script>
+const profiles = JSON.parse(localStorage.getItem('mathMasterProfiles') || '{}');
+document.getElementById('output').textContent = JSON.stringify(profiles, null, 2);
+</script>
+</body>
+</html>

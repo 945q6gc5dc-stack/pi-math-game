@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Kumar Srinivasan">
+    <title>My Progress - Pi Math Game</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><style>text{fill:%23667eea}@media(prefers-color-scheme:dark){text{fill:%23f093fb}}</style><text y=%22.9em%22 font-size=%2290%22>π</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="progress.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo-left">
+                    <div class="pi-symbol">π</div>
+                    <div class="pi-text">
+                        <h1 class="main-title">
+                            <span class="letter-p">P</span><span class="letter-i">i</span>
+                        </h1>
+                        <div class="pi-value">3.14159265...</div>
+                    </div>
+                </div>
+                <div class="logo-right">
+                    <h2 class="title-main">My Progress</h2>
+                    <p class="title-sub">AI-Powered Learning Insights</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="navigation-bar">
+            <button id="back-to-game-btn" class="nav-btn">
+                <span>←</span> Back to Game
+            </button>
+            <div class="profile-indicator">
+                <span class="profile-label">PLAYER:</span>
+                <span id="progress-player-name" class="profile-name-display"></span>
+            </div>
+        </div>
+
+        <!-- Profile Selection -->
+        <div id="progress-profile-selection" class="profile-selection">
+            <h3>Select Profile to View Progress</h3>
+            <div id="progress-profile-list" class="profile-list"></div>
+        </div>
+
+        <!-- Progress Dashboard -->
+        <div id="progress-dashboard" class="progress-dashboard hidden">
+
+            <!-- Overall Stats Card (Always Visible) -->
+            <div class="progress-card overview-card">
+                <div class="overview-stats">
+                    <div class="overview-item overview-title">
+                        <div class="overview-icon">⚡</div>
+                        <div class="overview-label">OVERALL PERFORMANCE</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="overview-value" id="overall-accuracy">0%</div>
+                        <div class="overview-label">Accuracy</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="overview-value" id="total-problems">0</div>
+                        <div class="overview-label">Problems</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="overview-value" id="avg-time">0s</div>
+                        <div class="overview-label">Avg. Time</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modern Segmented Control -->
+            <div class="segments-container">
+                <!-- Segmented Navigation Pills -->
+                <div class="segments-nav">
+                    <button class="segment-btn active" data-segment="recommendations" onclick="switchSegment('recommendations')">
+                        <span class="segment-icon">🚀</span>
+                        <span class="segment-label">RECOMMENDATIONS</span>
+                        <span id="recommendations-badge" class="segment-badge">0</span>
+                    </button>
+                    <button class="segment-btn" data-segment="operations" onclick="switchSegment('operations')">
+                        <span class="segment-icon">🔢</span>
+                        <span class="segment-label">OPERATIONS</span>
+                        <span id="operations-badge" class="segment-badge">0</span>
+                    </button>
+                    <button class="segment-btn" data-segment="weak-areas" onclick="switchSegment('weak-areas')">
+                        <span class="segment-icon">📈</span>
+                        <span class="segment-label">IMPROVE</span>
+                        <span id="weak-areas-badge" class="segment-badge">0</span>
+                    </button>
+                    <button class="segment-btn" data-segment="strengths" onclick="switchSegment('strengths')">
+                        <span class="segment-icon">💎</span>
+                        <span class="segment-label">STRENGTHS</span>
+                        <span id="strengths-badge" class="segment-badge">0</span>
+                    </button>
+                    <button class="segment-btn" data-segment="activity" onclick="switchSegment('activity')">
+                        <span class="segment-icon">⚡</span>
+                        <span class="segment-label">ACTIVITY</span>
+                        <span id="activity-badge" class="segment-badge">0</span>
+                    </button>
+                    <button class="segment-btn" data-segment="ai" onclick="switchSegment('ai')">
+                        <span class="segment-icon">✨</span>
+                        <span class="segment-label">AI</span>
+                        <span id="ai-badge" class="segment-badge optional">🧠</span>
+                    </button>
+                </div>
+
+                <!-- Single Content Area with Smooth Transitions -->
+                <div class="segment-content-area">
+                    <!-- Recommendations Segment -->
+                    <div class="segment-panel active" id="segment-recommendations">
+                        <div id="recommendations-list" class="recommendations-list">
+                            <!-- Recommendations will be dynamically generated -->
+                        </div>
+                    </div>
+
+                    <!-- Operations Segment -->
+                    <div class="segment-panel" id="segment-operations">
+                        <div id="operations-grid" class="operations-grid">
+                            <!-- Operation stats will be dynamically generated -->
+                        </div>
+                    </div>
+
+                    <!-- Weak Areas Segment -->
+                    <div class="segment-panel" id="segment-weak-areas">
+                        <div id="weak-patterns-list" class="patterns-list">
+                            <!-- Weak patterns will be dynamically generated -->
+                        </div>
+                    </div>
+
+                    <!-- Strengths Segment -->
+                    <div class="segment-panel" id="segment-strengths">
+                        <div id="strengths-list" class="patterns-list">
+                            <!-- Strengths will be dynamically generated -->
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity Segment -->
+                    <div class="segment-panel" id="segment-activity">
+                        <div id="recent-activity" class="recent-activity">
+                            <!-- Recent problems will be dynamically generated -->
+                        </div>
+                    </div>
+
+                    <!-- AI Insights Segment -->
+                    <div class="segment-panel" id="segment-ai">
+                        <div id="ai-insights-content" class="ai-insights-content">
+                            <p class="loading-message">Enable AI-powered insights</p>
+                        </div>
+                        <button id="generate-ai-btn" class="btn btn-primary hidden">Generate Insights</button>
+                        <div id="api-setup" class="api-setup hidden">
+                            <p class="api-info">Connect Claude API for personalized insights</p>
+                            <input type="password" id="api-key-input" placeholder="Enter Claude API key" />
+                            <button id="save-api-key-btn" class="btn btn-secondary">Connect</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="ai-agent.js"></script>
+    <script src="progress.js"></script>
+</body>
+</html>
