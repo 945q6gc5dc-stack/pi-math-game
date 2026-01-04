@@ -2819,7 +2819,7 @@ header {
     }
 
     .mobile-avatar .avatar-container {
-        height: 100%;
+        height: auto; /* Let content determine height */
         max-width: 100%;
         min-height: auto;
         margin: 0;
