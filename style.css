@@ -2797,7 +2797,7 @@ header {
 
     /* Match avatar height to vertical problems - using direct class on parent */
     .problem-display.vertical-format .mobile-avatar {
-        min-height: 120px !important;
+        min-height: 100px !important; /* Reduced from 120px to eliminate blue space */
         flex: 0 0 95px !important; /* Increase width to fit 90px avatar */
     }
 
@@ -2809,7 +2809,7 @@ header {
 
     /* Fallback for :has() selector (for browsers that support it) */
     .problem-display:has(.problem-text.vertical-format) .mobile-avatar {
-        min-height: 120px !important;
+        min-height: 100px !important; /* Reduced from 120px to eliminate blue space */
         flex: 0 0 95px !important; /* Increase width to fit 90px avatar */
     }
 
