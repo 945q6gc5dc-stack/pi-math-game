@@ -2803,25 +2803,10 @@ header {
         flex: 0 0 95px !important; /* Increase width to fit 90px avatar */
     }
 
-    /* Scale up avatar image for vertical format problems - using direct class on parent */
-    .problem-display.vertical-format .mobile-avatar .avatar-container .avatar-image {
-        width: 90px !important;
-        height: 100% !important; /* Fill container height */
-        max-height: 110px !important; /* Account for progress text space */
-        object-fit: cover !important; /* Fill height, crop width if needed */
-    }
-
     /* Fallback for :has() selector (for browsers that support it) */
     .problem-display:has(.problem-text.vertical-format) .mobile-avatar {
         min-height: 120px !important; /* Match vertical problem panel height */
         flex: 0 0 95px !important; /* Increase width to fit 90px avatar */
-    }
-
-    .problem-display:has(.problem-text.vertical-format) .mobile-avatar .avatar-container .avatar-image {
-        width: 90px !important;
-        height: 100% !important; /* Fill container height */
-        max-height: 110px !important; /* Account for progress text space */
-        object-fit: cover !important; /* Fill height, crop width if needed */
     }
 
     .mobile-avatar .avatar-container {
@@ -2831,24 +2816,35 @@ header {
         margin: 0;
         display: flex;
         flex-direction: column;
-        justify-content: space-between; /* Avatar at top, progress at bottom */
+        position: relative; /* Enable absolute positioning for child */
     }
 
     .mobile-avatar .avatar-image {
-        width: 65px;
-        height: 65px;
-        object-fit: contain;
-        position: relative;
+        position: absolute; /* Fill entire container like profile card */
+        top: 0;
+        left: 0;
+        width: 100% !important; /* Override inline styles */
+        height: 100% !important; /* Fill full height */
+        object-fit: cover; /* Fill space, crop if needed */
+        border-radius: 8px; /* Match container corners */
     }
 
     .mobile-avatar .avatar-progress {
         font-size: 0.65em;
-        padding: 2px;
-        margin-top: 2px;
+        padding: 6px 8px;
+        margin-top: auto; /* Push to bottom like profile card */
+        position: relative;
+        z-index: 2; /* Above avatar image */
+        background: rgba(255, 255, 255, 0.85); /* Semi-transparent white background */
+        border-radius: 0 0 8px 8px; /* Rounded bottom corners */
+        text-align: center;
     }
 
     .mobile-avatar .progress-text {
         font-size: 0.9em;
+        font-weight: bold;
+        color: #2c3e50;
+        text-shadow: 0 0 2px rgba(255, 255, 255, 0.8); /* Subtle glow for readability */
     }
 
     #answer-input {
