@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="orientation" content="portrait">
+    <meta name="author" content="Kumar Srinivasan">
+    <meta name="description" content="Pi - Practice Intelligence: A fun and interactive math game for children to improve their arithmetic skills through engaging problem-solving exercises">
+    <title>Pi - Practice Intelligence Math Game</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><style>text{fill:%23667eea}@media(prefers-color-scheme:dark){text{fill:%23f093fb}}</style><text y=%22.9em%22 font-size=%2290%22>π</text></svg>">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo-left">
+                    <div class="pi-text">
+                        <h1 class="main-title">
+                            <span class="pi-symbol">π</span>
+                            <span class="letter-p">P</span><span class="letter-i">i</span>
+                        </h1>
+                        <div class="pi-value">3.14159265...</div>
+                    </div>
+                </div>
+                <div class="logo-right">
+                    <h2 class="title-main">Practice Intelligence</h2>
+                    <p class="title-sub">Master Math Through Play!</p>
+                </div>
+            </div>
+        </header>
+
+        <div id="profile-selection" class="profile-selection">
+            <h3>Select Your Profile</h3>
+            <div class="profile-container">
+                <div id="profile-list" class="profile-list"></div>
+                <button id="add-profile-btn" class="btn btn-primary">+ Add New Profile</button>
+            </div>
+        </div>
+
+        <div id="game-container" class="hidden">
+            <!-- Player Info Row: π | Player Panel -->
+            <div class="player-info-row">
+                <!-- π Symbol Container -->
+                <div class="pi-container">
+                    <button id="pi-nav-btn" class="pi-nav-button" title="Back to Profile Selection" aria-label="Back to Profile Selection">
+                        <span class="pi-symbol">π</span>
+                    </button>
+                </div>
+
+                <!-- Player Info Panel -->
+                <div class="player-info">
+                    <!-- Desktop 2-Panel Layout (Grid: 2:1 ratio) -->
+                <div class="desktop-player-panels">
+                    <!-- Left Panel: PLAYER: NAME, GRADE X + switch button -->
+                    <div class="desktop-panel-left">
+                        <div class="desktop-player-text">
+                            <span class="desktop-player-label">PLAYER:</span>
+                            <span id="current-player-name" class="desktop-player-name"></span><span class="desktop-comma">,</span>
+                            <span class="desktop-grade-label">GRADE</span>
+                            <span id="current-grade-desktop" class="desktop-grade-num">3</span>
+                        </div>
+                        <div class="desktop-switch-wrapper">
+                            <button id="change-profile-btn" class="desktop-switch-btn" title="Change Profile">
+                                <img src="avatars/switch.png" alt="Change Profile">
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel: Crown + badge + MY PROGRESS button -->
+                    <div class="desktop-panel-right">
+                        <div class="crown-display desktop-crown">
+                            <img src="avatars/crown.png" alt="Crown" class="crown-icon">
+                            <div id="total-crowns" class="crown-count">0</div>
+                        </div>
+                        <div class="desktop-progress-wrapper">
+                            <button id="view-progress-btn-desktop" class="desktop-progress-btn" title="View My Progress">
+                                <img src="avatars/user-progress.png" alt="View Progress">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hidden grade selector for JavaScript access -->
+                <select id="grade" style="display: none;">
+                    <option value="1">Grade 1 (Ages 6-7)</option>
+                    <option value="2">Grade 2 (Ages 7-8)</option>
+                    <option value="3" selected>Grade 3 (Ages 8-9)</option>
+                    <option value="4">Grade 4 (Ages 9-10)</option>
+                    <option value="5">Grade 5 (Ages 10-11)</option>
+                    <option value="6">Grade 6 (Ages 11-12)</option>
+                    <option value="7">Grade 7 (Ages 12-13)</option>
+                    <option value="8">Grade 8 (Ages 13-14)</option>
+                    <option value="9">Grade 9 (Ages 14-15)</option>
+                    <option value="10">Grade 10 (Ages 15-16)</option>
+                </select>
+
+                <!-- Mobile layout (compact 2-line) -->
+                <div class="mobile-player-info">
+                    <!-- Line 1: PLAYER: NAME, GRADE X + change icon -->
+                    <div class="mobile-player-row-1">
+                        <div class="mobile-player-text">
+                            <span class="mobile-prefix">PLAYER:</span>
+                            <span id="current-player-name-mobile" class="mobile-player-name"></span><span class="mobile-comma">,</span>
+                            <span class="mobile-grade-text">GRADE</span>
+                            <span id="current-grade-mobile" class="mobile-grade-num">3</span>
+                        </div>
+                        <div class="mobile-change-wrapper">
+                            <button id="change-profile-btn-mobile" class="mobile-change-icon" title="Change Profile">
+                                <img src="avatars/switch.png" alt="Change Profile">
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Line 2: Crown + badge + progress button -->
+                    <div class="mobile-player-row-2">
+                        <div class="crown-display mobile-crown">
+                            <img src="avatars/crown.png" alt="Crown" class="crown-icon">
+                            <div id="total-crowns-mobile" class="crown-count">0</div>
+                        </div>
+                        <div class="mobile-progress-wrapper">
+                            <button id="view-progress-btn-mobile" class="progress-icon-btn" title="View My Progress">
+                                <img src="avatars/user-progress.png" alt="View Progress">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        <!-- Score Board Row: π | Score Panel -->
+        <div class="score-board-row">
+            <!-- π Symbol Container -->
+            <div class="pi-container pi-container-quiz">
+                <button id="pi-nav-btn-quiz" class="pi-nav-button" title="Back to Profile Selection" aria-label="Back to Profile Selection">
+                    <span class="pi-symbol">π</span>
+                </button>
+            </div>
+
+            <!-- Score Board Panel -->
+            <div class="score-board">
+            <div class="score-item">
+                <span class="label">Level:</span>
+                <span id="level" class="value">1</span>
+            </div>
+            <div class="score-item">
+                <span class="label">Question:</span>
+                <span id="question-counter" class="value">0/10</span>
+            </div>
+            <div class="score-item">
+                <span class="label">Score:</span>
+                <span id="score" class="value">0</span>
+            </div>
+            <div class="score-item">
+                <span class="label">Time Left:</span>
+                <span id="timer" class="value">30s</span>
+            </div>
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+        <div class="game-area">
+            <div id="start-screen" class="start-screen">
+                <h2>Ready for the Challenge?</h2>
+                <div class="operation-selector-wrapper">
+                    <label class="operation-label">Choose Operation:</label>
+                    <div class="operation-pills-container">
+                        <button type="button" class="operation-pill active" data-operation="mixed">
+                            <span class="pill-icon">±</span>
+                            <span class="pill-label">Mixed</span>
+                        </button>
+                        <button type="button" class="operation-pill" data-operation="addition">
+                            <span class="pill-icon">+</span>
+                            <span class="pill-label">Add</span>
+                        </button>
+                        <button type="button" class="operation-pill" data-operation="subtraction">
+                            <span class="pill-icon">−</span>
+                            <span class="pill-label">Subtract</span>
+                        </button>
+                        <button type="button" class="operation-pill" data-operation="multiplication">
+                            <span class="pill-icon">×</span>
+                            <span class="pill-label">Multiply</span>
+                        </button>
+                        <button type="button" class="operation-pill" data-operation="division">
+                            <span class="pill-icon">÷</span>
+                            <span class="pill-label">Divide</span>
+                        </button>
+                    </div>
+                </div>
+                <p class="game-info"><span id="level-mission-text" class="level-mission-text">Level 1 Mission:</span></p>
+                <p class="game-info mission-info"><span class="mission-number">10</span> problems - <span id="start-time-display" class="mission-number">30</span> seconds each</p>
+                <div class="start-buttons-container">
+                    <div class="map-btn-wrapper">
+                        <button id="view-map-btn-start" class="btn-circular explore-map-btn" title="Explore Level Map">
+                            <img src="avatars/navigate.png" alt="Explore Map">
+                        </button>
+                    </div>
+                    <div class="go-btn-wrapper">
+                        <button id="start-btn" class="btn btn-success btn-large">
+                            <img src="avatars/go.png" alt="GO">
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quiz-screen" class="quiz-screen hidden">
+                <div class="timer-bar-container">
+                    <div id="timer-bar" class="timer-bar"></div>
+                </div>
+
+                <div class="problem-display">
+                    <div id="problem" class="problem-text"></div>
+                    <!-- Mobile avatar (shown only on mobile) -->
+                    <div id="mobile-avatar-section" class="avatar-section mobile-avatar">
+                        <div class="avatar-container">
+                            <img id="mobile-avatar-image" class="avatar-image" src="avatars/boy-neutral.png" alt="Avatar">
+                            <div class="avatar-progress">
+                                <div class="progress-text">
+                                    <span id="mobile-avatar-correct">0</span>/10
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="answer-section">
+                    <input type="number" id="answer-input" placeholder="Enter your answer" disabled>
+                    <button id="submit-btn" class="btn btn-primary" disabled></button>
+                </div>
+
+                <!-- Number Pad - Mobile Only -->
+                <div class="number-pad-container">
+                    <!-- Display Area with Send Button -->
+                    <div class="number-pad-input-row">
+                        <div id="number-pad-display" class="number-pad-display empty"
+                             role="status" aria-live="polite" aria-atomic="true">
+                            Enter answer
+                        </div>
+                        <button id="number-pad-submit" class="number-pad-send-btn"
+                                aria-label="Submit answer" disabled></button>
+                    </div>
+
+                    <!-- Number Grid (3x4) -->
+                    <div class="number-pad-grid">
+                        <button class="number-btn" data-digit="7" aria-label="Number 7">7</button>
+                        <button class="number-btn" data-digit="8" aria-label="Number 8">8</button>
+                        <button class="number-btn" data-digit="9" aria-label="Number 9">9</button>
+
+                        <button class="number-btn" data-digit="4" aria-label="Number 4">4</button>
+                        <button class="number-btn" data-digit="5" aria-label="Number 5">5</button>
+                        <button class="number-btn" data-digit="6" aria-label="Number 6">6</button>
+
+                        <button class="number-btn" data-digit="1" aria-label="Number 1">1</button>
+                        <button class="number-btn" data-digit="2" aria-label="Number 2">2</button>
+                        <button class="number-btn" data-digit="3" aria-label="Number 3">3</button>
+
+                        <button class="number-btn special" id="number-pad-sign"
+                                aria-label="Toggle positive or negative">±</button>
+                        <button class="number-btn" data-digit="0" aria-label="Number 0">0</button>
+                        <button class="number-btn special" id="number-pad-backspace"
+                                aria-label="Delete last digit">⌫</button>
+                    </div>
+                </div>
+
+                <div id="feedback" class="feedback"></div>
+                <div id="feedback-answer" class="feedback-answer"></div>
+            </div>
+
+            <div id="results-screen" class="results-screen hidden">
+                <h2 id="results-heading">🎉 Level Complete! 🎉</h2>
+
+                <div class="crown-reward">
+                    <div id="crowns-earned" class="crowns-earned"></div>
+                </div>
+
+                <div class="results-stats">
+                    <div class="result-item">
+                        <span class="result-label">Correct Answers:</span>
+                        <span id="quiz-correct" class="result-value">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Your Score:</span>
+                        <span id="quiz-score" class="result-value">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Accuracy:</span>
+                        <span id="quiz-accuracy" class="result-value">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level Up Section - Mobile/Tablet version -->
+            <div id="level-up-section" class="level-up-section mobile-only hidden">
+                <div id="level-up-message" class="level-up-panel">
+                    <div>
+                        <h3 id="level-up-heading">🌟 Level Up! 🌟</h3>
+                        <p id="level-up-text" class="level-mission-text">Next Mission:</p>
+                        <p class="mission-details"><span>10</span> problems</p>
+                        <p class="mission-details"><span id="next-time"></span> seconds each</p>
+                    </div>
+                    <div class="level-action-buttons">
+                        <div class="button-row">
+                            <div class="continue-level-btn-wrapper">
+                                <button id="next-level-btn" class="btn-circular" title="Continue">
+                                    <img src="avatars/go.png" alt="Continue">
+                                </button>
+                            </div>
+                            <div class="play-again-btn-wrapper">
+                                <button id="play-again-btn" class="btn-circular" title="Play Again">
+                                    <img src="avatars/playagain.png" alt="Play Again">
+                                </button>
+                            </div>
+                            <div class="map-btn-wrapper">
+                                <button id="view-map-btn" class="btn-circular explore-map-btn" title="Explore Level Map">
+                                    <img src="avatars/navigate.png" alt="Explore Map">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-panel">
+            <!-- Level Up Section - Desktop version (duplicate for desktop stats-panel placement) -->
+            <div id="level-up-section-desktop" class="level-up-section desktop-only hidden">
+                <div class="level-up-panel">
+                    <div>
+                        <h3 class="level-up-heading-desktop">🌟 Level Up! 🌟</h3>
+                        <p class="level-up-text-desktop level-mission-text">Next Mission:</p>
+                        <p class="mission-details"><span>10</span> problems</p>
+                        <p class="mission-details"><span class="next-time-desktop"></span> seconds each</p>
+                    </div>
+                    <div class="level-action-buttons">
+                        <div class="button-row">
+                            <div class="continue-level-btn-wrapper">
+                                <button class="next-level-btn-desktop btn-circular" title="Continue">
+                                    <img src="avatars/go.png" alt="Continue">
+                                </button>
+                            </div>
+                            <div class="play-again-btn-wrapper">
+                                <button class="play-again-btn-desktop btn-circular" title="Play Again">
+                                    <img src="avatars/playagain.png" alt="Play Again">
+                                </button>
+                            </div>
+                            <div class="map-btn-wrapper">
+                                <button class="view-map-btn-desktop btn-circular explore-map-btn" title="Explore Level Map">
+                                    <img src="avatars/navigate.png" alt="Explore Map">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="avatar-section" class="avatar-section hidden">
+                <div class="avatar-container">
+                    <img id="avatar-image-base" class="avatar-image avatar-base" src="avatars/boy-neutral.png" alt="Avatar Base">
+                    <img id="avatar-image-overlay" class="avatar-image avatar-overlay" src="avatars/boy-neutral.png" alt="Avatar Overlay">
+                    <div class="avatar-progress">
+                        <div class="progress-text">
+                            <span id="avatar-correct">0</span>/10 correct
+                        </div>
+                    </div>
+                </div>
+                <!-- Feedback section moved here for desktop -->
+                <div id="feedback-desktop" class="feedback"></div>
+                <div id="feedback-answer-desktop" class="feedback-answer-desktop"></div>
+            </div>
+
+            <div id="stats-section">
+            <h2>Today's Progress</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-attempted">0</div>
+                    <div class="stat-label">Attempted</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="total-correct">0</div>
+                    <div class="stat-label">Correct</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="accuracy">0%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="best-streak">0</div>
+                    <div class="stat-label">Best Streak</div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modals (outside container to avoid clipping issues) -->
+    <div id="profile-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Create New Profile</h3>
+            <input type="text" id="profile-name-input" placeholder="Enter your name" maxlength="20">
+            <div class="avatar-gender-selection">
+                <label>Choose Avatar:</label>
+                <div class="gender-options">
+                    <label class="gender-option">
+                        <input type="radio" name="avatar-gender" value="boy" checked>
+                        <img src="avatars/boy-full.png" alt="Boy Avatar" class="avatar-preview">
+                    </label>
+                    <label class="gender-option">
+                        <input type="radio" name="avatar-gender" value="girl">
+                        <img src="avatars/girl-full.png" alt="Girl Avatar" class="avatar-preview">
+                    </label>
+                </div>
+            </div>
+            <div class="profile-grade-selection">
+                <label for="profile-grade-select">Choose Grade Level:</label>
+                <select id="profile-grade-select">
+                    <option value="1">Grade 1 (Ages 6-7)</option>
+                    <option value="2">Grade 2 (Ages 7-8)</option>
+                    <option value="3" selected>Grade 3 (Ages 8-9)</option>
+                    <option value="4">Grade 4 (Ages 9-10)</option>
+                    <option value="5">Grade 5 (Ages 10-11)</option>
+                    <option value="6">Grade 6 (Ages 11-12)</option>
+                    <option value="7">Grade 7 (Ages 12-13)</option>
+                    <option value="8">Grade 8 (Ages 13-14)</option>
+                    <option value="9">Grade 9 (Ages 14-15)</option>
+                    <option value="10">Grade 10 (Ages 15-16)</option>
+                </select>
+            </div>
+            <div class="modal-buttons">
+                <button id="create-profile-btn" class="btn btn-success">Create</button>
+                <button id="cancel-profile-btn" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="level-map-modal" class="modal hidden">
+        <div class="modal-content modal-large">
+            <button id="prev-grade-btn" class="grade-nav-btn grade-nav-prev" title="Previous Grade">‹</button>
+            <button id="next-grade-btn" class="grade-nav-btn grade-nav-next" title="Next Grade">›</button>
+            <button id="close-map-btn" class="modal-close">×</button>
+            <h3>Your Learning Journey</h3>
+            <p class="map-subtitle">Grade <span id="map-grade"></span> - Navigate Your Path to Mastery</p>
+            <div id="level-map-container" class="level-map-container">
+                <!-- Level nodes will be dynamically generated here -->
+            </div>
+            <div id="operation-legend" class="operation-legend hidden">
+                <div class="operation-legend-icon" id="legend-icon"></div>
+                <span class="operation-legend-text" id="legend-text">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="delete-confirm-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="delete-avatar-container">
+                <img id="delete-avatar-image" src="avatars/boy-sad.png" alt="Sad Avatar">
+            </div>
+            <h3 id="delete-profile-name">Delete Profile?</h3>
+            <p class="delete-warning">This action cannot be undone.</p>
+            <div class="modal-buttons">
+                <button id="confirm-delete-btn" class="btn btn-danger">Delete</button>
+                <button id="cancel-delete-btn" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Eruda Mobile Console (REMOVE AFTER DEBUGGING) -->
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+
+    <script src="ai-agent.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
