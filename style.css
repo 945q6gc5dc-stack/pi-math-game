@@ -2788,6 +2788,8 @@ header {
     /* Show mobile avatar */
     .mobile-avatar {
         display: flex !important;
+        flex-direction: column;
+        justify-content: center; /* Vertically center avatar content */
         flex: 0 0 80px; /* Fixed 80px width */
         padding: 4px;
         margin: 0;
@@ -2797,7 +2799,7 @@ header {
 
     /* Match avatar height to vertical problems - using direct class on parent */
     .problem-display.vertical-format .mobile-avatar {
-        min-height: 100px !important; /* Reduced from 120px to eliminate blue space */
+        min-height: 120px !important; /* Match vertical problem panel height */
         flex: 0 0 95px !important; /* Increase width to fit 90px avatar */
     }
 
@@ -2809,7 +2811,7 @@ header {
 
     /* Fallback for :has() selector (for browsers that support it) */
     .problem-display:has(.problem-text.vertical-format) .mobile-avatar {
-        min-height: 100px !important; /* Reduced from 120px to eliminate blue space */
+        min-height: 120px !important; /* Match vertical problem panel height */
         flex: 0 0 95px !important; /* Increase width to fit 90px avatar */
     }
 
