@@ -2808,7 +2808,7 @@ header {
         width: 90px !important;
         height: 100% !important; /* Fill container height */
         max-height: 110px !important; /* Account for progress text space */
-        object-fit: contain !important;
+        object-fit: cover !important; /* Fill height, crop width if needed */
     }
 
     /* Fallback for :has() selector (for browsers that support it) */
@@ -2821,7 +2821,7 @@ header {
         width: 90px !important;
         height: 100% !important; /* Fill container height */
         max-height: 110px !important; /* Account for progress text space */
-        object-fit: contain !important;
+        object-fit: cover !important; /* Fill height, crop width if needed */
     }
 
     .mobile-avatar .avatar-container {
