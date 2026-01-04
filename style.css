@@ -2791,10 +2791,9 @@ header {
         flex-direction: column;
         justify-content: space-between; /* Push avatar to top, progress to bottom */
         flex: 0 0 80px; /* Fixed 80px width */
-        padding: 4px;
+        padding: 0; /* No padding like profile cards */
         margin: 0;
         min-height: 85px; /* Default height for horizontal problems */
-        padding-bottom: 4px;
     }
 
     /* Match avatar height to vertical problems - using direct class on parent */
