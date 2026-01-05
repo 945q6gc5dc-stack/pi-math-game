@@ -100,7 +100,7 @@ const resultsHeading = document.getElementById('results-heading');
 const levelUpSection = document.getElementById('level-up-section');
 const levelUpHeading = document.getElementById('level-up-heading');
 const levelUpText = document.getElementById('level-up-text');
-const piSymbol = document.querySelector('.pi-symbol');
+const piSymbol = document.querySelector('.pi-nav-button');
 const playAgainBtn = document.getElementById('play-again-btn');
 const viewMapBtn = document.getElementById('view-map-btn');
 const viewMapBtnStart = document.getElementById('view-map-btn-start');
@@ -317,7 +317,10 @@ function init() {
             createProfile();
         }
     });
-    piSymbol.addEventListener('click', goToHomePage);
+    // Pi symbol button (with null check)
+    if (piSymbol) {
+        piSymbol.addEventListener('click', goToHomePage);
+    }
 
     // Desktop progress button (with null check)
     if (viewProgressBtnDesktop) {

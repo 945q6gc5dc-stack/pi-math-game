@@ -1,6 +1,6 @@
 {
   "name": "Pi - Practice Intelligence",
-  "short_name": "π Math",
+  "short_name": "PI",
   "description": "A fun and interactive math game for children to improve arithmetic skills through engaging problem-solving exercises",
   "start_url": "./index.html",
   "scope": "./",
