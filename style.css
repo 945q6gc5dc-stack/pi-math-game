@@ -565,6 +565,21 @@ header {
     border-radius: 8px 0 0 8px;
 }
 
+/* Large centered logo image in left panel */
+.pi-logo-image-large {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: drop-shadow(0 4px 12px rgba(102, 126, 234, 0.3));
+}
+
+.pi-logo-image-large:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 6px 20px rgba(102, 126, 234, 0.5));
+}
+
 .logo-right {
     flex: 1; /* Right box takes remaining space */
     display: flex;
@@ -628,6 +643,22 @@ header {
     100% { transform: rotate(360deg) scale(1); }
 }
 
+/* π Logo Image - replaces text π symbol in header */
+.pi-logo-image {
+    display: inline-block;
+    height: 2.5rem; /* Match original .pi-symbol font-size */
+    width: auto;
+    vertical-align: baseline;
+    margin-right: 0.2em;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.3));
+}
+
+.pi-logo-image:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.6));
+}
+
 .pi-symbol {
     /* Universal π symbol styling - always a <span> element */
     display: inline;
@@ -653,6 +684,16 @@ header {
     transition: transform 0.2s ease;
 }
 
+/* π Navigation Image in quiz/player rows */
+.pi-nav-image {
+    display: block;
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.3));
+}
+
 /* Navigation button wrapper for clickable π symbols */
 .pi-nav-button {
     /* Button resets */
@@ -668,6 +709,10 @@ header {
 /* HOVER EFFECT MOVED: See "HOVER & TOUCH DEVICE OPTIMIZATION" section at end of file */
 
 .pi-nav-button:active .pi-symbol {
+    transform: scale(0.95);
+}
+
+.pi-nav-button:active .pi-nav-image {
     transform: scale(0.95);
 }
 
@@ -2833,6 +2878,16 @@ header {
         height: 100%;
     }
 
+    /* Large logo in left panel - mobile size */
+    .pi-logo-image-large {
+        max-width: 40px; /* Compact for mobile 50px height panel */
+        height: auto;
+    }
+
+    .pi-logo-image {
+        height: 2.5rem; /* 40px - prominent brand symbol, same as text version */
+    }
+
     .pi-symbol {
         font-size: 2.5rem; /* 40px - prominent brand symbol */
         margin: 0;
@@ -4161,6 +4216,12 @@ body.force-portrait-lock::after {
     /* Pi Navigation Button Symbol */
     .pi-nav-button:hover .pi-symbol {
         transform: scale(1.1);
+    }
+
+    /* Pi Navigation Button Image */
+    .pi-nav-button:hover .pi-nav-image {
+        transform: scale(1.1);
+        filter: drop-shadow(0 4px 16px rgba(102, 126, 234, 0.5));
     }
     
     /* Desktop Switch Button */
