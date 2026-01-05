@@ -246,28 +246,16 @@ function init() {
 
     // Operation pill button click handlers
     const operationPills = document.querySelectorAll('.operation-pill');
-    console.log('[DEBUG] Found operation pills:', operationPills.length);
-    console.log('[DEBUG] Operation pills:', operationPills);
 
-    operationPills.forEach((pill, index) => {
-        console.log(`[DEBUG] Setting up click handler for pill ${index}:`, pill.getAttribute('data-operation'));
-
+    operationPills.forEach((pill) => {
         pill.addEventListener('click', (e) => {
-            console.log('[DEBUG] ========== PILL CLICK EVENT FIRED ==========');
             e.preventDefault(); // Prevent default behavior
             e.stopPropagation(); // Stop event bubbling
 
-            const previousOperation = selectedOperation;
             const newOperation = pill.getAttribute('data-operation');
-
-            console.log('[DEBUG] Operation pill clicked!');
-            console.log('[DEBUG] - Previous operation:', previousOperation);
-            console.log('[DEBUG] - Clicked pill:', newOperation);
-            console.log('[DEBUG] - Pill disabled?:', pill.disabled);
 
             // Check if pill is disabled
             if (pill.disabled) {
-                console.log('[DEBUG] Pill is disabled, ignoring click');
                 return;
             }
 
@@ -276,7 +264,6 @@ function init() {
             // Update active state on pills
             operationPills.forEach(p => p.classList.remove('active'));
             pill.classList.add('active');
-            console.log('[DEBUG] - Active class updated on pill:', newOperation);
 
             // Reload current level for new operation
             if (currentProfile && profiles[currentProfile]) {
@@ -297,14 +284,7 @@ function init() {
                 profile.selectedOperation = selectedOperation;
 
                 // Save the operation change to profile immediately
-                console.log('[DEBUG] - About to save profile...');
-                console.log('[DEBUG] - Setting profile.selectedOperation to:', selectedOperation);
                 saveProfiles();
-                console.log('[DEBUG] - Profile saved! Selected operation:', selectedOperation);
-                console.log('[DEBUG] - Saved profile data:', JSON.stringify({
-                    name: profile.name,
-                    selectedOperation: profile.selectedOperation
-                }));
             }
         });
     });
@@ -340,16 +320,9 @@ function updateFeedbackAnswer(text, display) {
 
 // Helper function to update level display and mission text
 function updateLevelDisplay(level) {
-    console.log('[DEBUG] updateLevelDisplay called with level:', level);
-    console.log('[DEBUG] levelDisplay element:', levelDisplay);
-    console.log('[DEBUG] levelMissionText element:', levelMissionText);
-
     levelDisplay.textContent = level;
     if (levelMissionText) {
         levelMissionText.textContent = `Level ${level} Mission:`;
-        console.log('[DEBUG] Updated levelMissionText to:', levelMissionText.textContent);
-    } else {
-        console.warn('[WARNING] levelMissionText element not found!');
     }
 }
 
@@ -387,7 +360,6 @@ function detectDeviceType() {
                    (/Macintosh/i.test(ua) && maxTouchPoints > 1);
 
     if (isIPad) {
-        console.log('[Portrait Lock] Device detected: iPad (tablet)');
         return 'tablet';
     }
 
@@ -395,14 +367,12 @@ function detectDeviceType() {
     // Android tablets have "Android" but NOT "Mobile" in user agent
     const isAndroidTablet = /Android/i.test(ua) && !/Mobile/i.test(ua);
     if (isAndroidTablet) {
-        console.log('[Portrait Lock] Device detected: Android Tablet');
         return 'tablet';
     }
 
     // 3. Phone detection
     const isPhone = /Mobile|iPhone|Android.*Mobile/i.test(ua);
     if (isPhone) {
-        console.log('[Portrait Lock] Device detected: Mobile Phone');
         return 'phone';
     }
 
@@ -413,19 +383,16 @@ function detectDeviceType() {
     if (maxTouchPoints > 0) {
         // Phone: short side < 768px and very tall aspect ratio (> 1.6:1)
         if (shortSide < 768 && aspectRatio > 1.6) {
-            console.log('[Portrait Lock] Device detected: Phone (screen-based fallback)');
             return 'phone';
         }
 
         // Tablet: short side 600-1100px and tablet aspect ratio (1.2-1.8:1)
         if (shortSide >= 600 && shortSide <= 1100 && aspectRatio >= 1.2 && aspectRatio <= 1.8) {
-            console.log('[Portrait Lock] Device detected: Tablet (screen-based fallback)');
             return 'tablet';
         }
     }
 
     // Desktop fallback
-    console.log('[Portrait Lock] Device detected: Desktop');
     return 'desktop';
 }
 
@@ -437,15 +404,11 @@ function applyPortraitLock() {
     const deviceType = detectDeviceType();
     const isLandscape = window.innerWidth > window.innerHeight;
 
-    console.log(`[Portrait Lock] Device: ${deviceType}, Landscape: ${isLandscape}, Width: ${window.innerWidth}px, Height: ${window.innerHeight}px`);
-
     // Apply portrait lock only for phones and tablets in landscape orientation
     if ((deviceType === 'phone' || deviceType === 'tablet') && isLandscape) {
         document.body.classList.add('force-portrait-lock');
-        console.log('[Portrait Lock] ✓ Portrait lock ENABLED');
     } else {
         document.body.classList.remove('force-portrait-lock');
-        console.log('[Portrait Lock] ✗ Portrait lock DISABLED');
     }
 }
 
@@ -577,8 +540,6 @@ function initNumberPad() {
     if (submitButton) {
         submitButton.addEventListener('click', submitAnswer);
     }
-
-    console.log('Number pad initialized for mobile device');
 }
 
 // ============================================
@@ -733,7 +694,6 @@ function updateOperationOptions(preferredOperation = null) {
             }
         });
     } else {
-        console.log('[DEBUG] Operation changed! Requested:', currentSelection, '- Not available for this grade, defaulting to: mixed');
         selectedOperation = 'mixed';
         // Set active class on mixed pill
         operationPills.forEach(pill => {
@@ -743,10 +703,6 @@ function updateOperationOptions(preferredOperation = null) {
                 pill.classList.remove('active');
             }
         });
-    }
-
-    if (preferredOperation) {
-        console.log('[DEBUG] updateOperationOptions called with preferredOperation:', preferredOperation, '- Final selectedOperation:', selectedOperation);
     }
 }
 
@@ -782,7 +738,6 @@ function migrateOldProfiles() {
         if (!profile.grade) {
             profile.grade = 3; // Default to Grade 3
             migrationApplied = true;
-            console.log(`[MIGRATION] Set default grade 3 for ${profile.name}`);
         }
 
         // Check if profile has level completion data
@@ -810,7 +765,6 @@ function migrateOldProfiles() {
                     if (currentLevelForOperation === maxLevel) {
                         profile.currentLevels[gradeKey][operation] = maxLevel + 1;
                         migrationApplied = true;
-                        console.log(`[MIGRATION] Updated ${profile.name}'s ${gradeKey} ${operation} from level 10 to 11`);
                     }
                 }
             });
@@ -820,7 +774,6 @@ function migrateOldProfiles() {
     // Save profiles if any migration was applied
     if (migrationApplied) {
         saveProfiles();
-        console.log('[MIGRATION] Profile migration completed and saved');
     }
 }
 
@@ -988,7 +941,6 @@ function selectProfile(profileId) {
 
     // Load selected operation (default to 'mixed' if not saved)
     selectedOperation = profile.selectedOperation || 'mixed';
-    console.log('[DEBUG] Loading profile:', profile.name, '- Selected operation:', selectedOperation);
 
     // Load current level for this grade and operation
     if (!profile.currentLevels) profile.currentLevels = {};
@@ -1029,7 +981,6 @@ function selectProfile(profileId) {
     updateTimeDisplay();
     updateOperationOptions(selectedOperation);
     updateStartScreenUI(); // Update start screen based on level completion
-    console.log('[DEBUG] After updateOperationOptions - selectedOperation:', selectedOperation);
 
     // Initialize AI agent
     if (window.PiAIAgent) {
@@ -1347,7 +1298,7 @@ function generateProblem() {
                 targetPattern = aiSuggestion.focusPatterns[0];
             }
         } catch (error) {
-            console.log('[AI] Could not get recommendation, using random generation:', error);
+            // Fall back to random generation
         }
     }
 
@@ -1370,11 +1321,10 @@ function generateProblem() {
         try {
             const patternProblem = generatePatternTargetedProblem(grade, operationType, targetPattern, difficulty);
             if (patternProblem) {
-                console.log(`[AI] Generated ${targetPattern} pattern for ${operationType}`);
                 return patternProblem;
             }
         } catch (error) {
-            console.log('[AI] Pattern generation failed, falling back to random:', error);
+            // Fall back to standard generation
         }
     }
 
@@ -1809,9 +1759,6 @@ function showNextQuestion() {
         problemDisplay.classList.remove('vertical-format');
         // Also remove from parent for mobile avatar scaling
         problemDisplay.parentElement.classList.remove('vertical-format');
-
-        // Debug: Verify class was removed from parent
-        console.log('[DEBUG] Horizontal problem - vertical-format class removed:', !problemDisplay.parentElement.classList.contains('vertical-format'));
     }
 
     // Reset input based on device type
@@ -1872,13 +1819,6 @@ function displayVerticalProblem(problemText) {
     problemDisplay.classList.add('vertical-format');
     // Also add to parent for mobile avatar scaling
     problemDisplay.parentElement.classList.add('vertical-format');
-
-    // Debug: Verify class was added to parent
-    console.log('[DEBUG] Vertical problem detected:');
-    console.log('  - problemDisplay element:', problemDisplay);
-    console.log('  - Parent element:', problemDisplay.parentElement);
-    console.log('  - Parent classes:', problemDisplay.parentElement.className);
-    console.log('  - Has vertical-format class:', problemDisplay.parentElement.classList.contains('vertical-format'));
 }
 
 // Start the countdown timer
