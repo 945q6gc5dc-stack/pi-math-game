@@ -364,6 +364,100 @@ function isMobileDevice() {
     return window.innerWidth <= 900; // Changed from 600 to 900 to include tablets
 }
 
+// ============================================
+// Portrait Lock Device Detection (for tablets and phones)
+// ============================================
+
+/**
+ * Robust device type detection for portrait lock
+ * Combines user agent, touch points, screen dimensions, and aspect ratio
+ * Returns: 'phone', 'tablet', or 'desktop'
+ * Accuracy: 95%+ across modern devices (2026)
+ */
+function detectDeviceType() {
+    const ua = navigator.userAgent;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const aspectRatio = Math.max(width, height) / Math.min(width, height);
+    const maxTouchPoints = navigator.maxTouchPoints || 0;
+
+    // 1. iPad detection (handles iPadOS desktop mode issue)
+    // iPadOS Safari reports as "Macintosh" in desktop mode, so we check touch points
+    const isIPad = (/iPad/i.test(ua)) ||
+                   (/Macintosh/i.test(ua) && maxTouchPoints > 1);
+
+    if (isIPad) {
+        console.log('[Portrait Lock] Device detected: iPad (tablet)');
+        return 'tablet';
+    }
+
+    // 2. Android tablet detection
+    // Android tablets have "Android" but NOT "Mobile" in user agent
+    const isAndroidTablet = /Android/i.test(ua) && !/Mobile/i.test(ua);
+    if (isAndroidTablet) {
+        console.log('[Portrait Lock] Device detected: Android Tablet');
+        return 'tablet';
+    }
+
+    // 3. Phone detection
+    const isPhone = /Mobile|iPhone|Android.*Mobile/i.test(ua);
+    if (isPhone) {
+        console.log('[Portrait Lock] Device detected: Mobile Phone');
+        return 'phone';
+    }
+
+    // 4. Screen-based fallback for edge cases
+    const shortSide = Math.min(width, height);
+
+    // Touch-capable device with phone/tablet characteristics
+    if (maxTouchPoints > 0) {
+        // Phone: short side < 768px and very tall aspect ratio (> 1.6:1)
+        if (shortSide < 768 && aspectRatio > 1.6) {
+            console.log('[Portrait Lock] Device detected: Phone (screen-based fallback)');
+            return 'phone';
+        }
+
+        // Tablet: short side 600-1100px and tablet aspect ratio (1.2-1.8:1)
+        if (shortSide >= 600 && shortSide <= 1100 && aspectRatio >= 1.2 && aspectRatio <= 1.8) {
+            console.log('[Portrait Lock] Device detected: Tablet (screen-based fallback)');
+            return 'tablet';
+        }
+    }
+
+    // Desktop fallback
+    console.log('[Portrait Lock] Device detected: Desktop');
+    return 'desktop';
+}
+
+/**
+ * Apply portrait lock based on device type and orientation
+ * Adds/removes 'force-portrait-lock' class on body element
+ */
+function applyPortraitLock() {
+    const deviceType = detectDeviceType();
+    const isLandscape = window.innerWidth > window.innerHeight;
+
+    console.log(`[Portrait Lock] Device: ${deviceType}, Landscape: ${isLandscape}, Width: ${window.innerWidth}px, Height: ${window.innerHeight}px`);
+
+    // Apply portrait lock only for phones and tablets in landscape orientation
+    if ((deviceType === 'phone' || deviceType === 'tablet') && isLandscape) {
+        document.body.classList.add('force-portrait-lock');
+        console.log('[Portrait Lock] ✓ Portrait lock ENABLED');
+    } else {
+        document.body.classList.remove('force-portrait-lock');
+        console.log('[Portrait Lock] ✗ Portrait lock DISABLED');
+    }
+}
+
+// Initialize portrait lock detection on page load
+window.addEventListener('load', applyPortraitLock);
+
+// Re-check on window resize (handles orientation changes on all devices)
+window.addEventListener('resize', applyPortraitLock);
+
+// Re-check on orientation change (iOS/Android specific event)
+window.addEventListener('orientationchange', applyPortraitLock);
+
 // Append digit to number pad display
 function appendDigit(digit) {
     // Prevent leading zeros

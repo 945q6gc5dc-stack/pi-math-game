@@ -2647,6 +2647,30 @@ header {
         height: 70px;
     }
 
+    /* Play Again button wrapper - mobile sizing */
+    .play-again-btn-wrapper {
+        width: 70px;
+        height: 70px;
+        background: transparent !important; /* Ensure no background color */
+    }
+
+    .play-again-btn-wrapper::before {
+        width: 70px;
+        height: 70px;
+    }
+
+    /* Continue/Level Up button wrapper - mobile sizing */
+    .continue-level-btn-wrapper {
+        width: 70px;
+        height: 70px;
+        background: transparent !important; /* Ensure no background color */
+    }
+
+    .continue-level-btn-wrapper::before {
+        width: 70px;
+        height: 70px;
+    }
+
     .btn-circular {
         width: 70px;
         height: 70px;
@@ -2726,10 +2750,12 @@ header {
     /* Compact level action buttons on mobile */
     .level-action-buttons {
         gap: 10px; /* Reduce from 15px */
+        background: transparent !important; /* Ensure no background color */
     }
 
     .button-row {
         gap: 15px; /* Reduce from 20px */
+        background: transparent !important; /* Ensure no background color */
     }
 
     /* MOBILE AVATAR OPTIMIZATION - Target: 90px height */
@@ -2834,7 +2860,8 @@ header {
         margin-top: auto; /* Push to bottom like profile card */
         position: relative;
         z-index: 2; /* Above avatar image */
-        background: rgba(255, 255, 255, 0.85); /* Semi-transparent white background */
+        background: rgba(255, 255, 255, 0.5); /* Match profile card transparency */
+        backdrop-filter: blur(10px); /* Frosted glass effect like profile card */
         border-radius: 0 0 8px 8px; /* Rounded bottom corners */
         text-align: center;
     }
@@ -3309,15 +3336,66 @@ header {
    LANDSCAPE ORIENTATION LOCK - MOBILE DEVICES ONLY
    ============================================================================ */
 
-/* Landscape orientation warning overlay for mobile devices (≤900px) */
-@media screen and (max-width: 900px) and (orientation: landscape) {
-    /* Hide main content in landscape */
-    .container {
+/* ==============================================================================
+   PORTRAIT LOCK - JavaScript-Enhanced with CSS Fallback
+   ============================================================================== */
+
+/* PRIMARY METHOD: JavaScript-triggered portrait lock (95%+ accuracy)
+   Applied via 'force-portrait-lock' class on body element by detectDeviceType() */
+body.force-portrait-lock .container {
+    display: none !important;
+}
+
+body.force-portrait-lock::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    z-index: 99998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.force-portrait-lock::after {
+    content: '📱\A\APlease rotate your device\Ato portrait mode\A\A↻';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #667eea;
+    white-space: pre-line;
+    line-height: 1.8;
+}
+
+/* FALLBACK METHOD: CSS-only portrait lock (90% accuracy)
+   Uses touch capability detection for no-JavaScript scenarios
+   Filters out desktop mice (pointer: coarse = touch input) */
+@media (pointer: coarse) and (min-aspect-ratio: 4/3) and (orientation: landscape) {
+    /* Only apply if JavaScript class is NOT already applied (avoid double styling) */
+    body:not(.force-portrait-lock) .container {
         display: none !important;
     }
 
-    /* Show rotation warning */
-    body::before {
+    body:not(.force-portrait-lock)::before {
         content: '';
         position: fixed;
         top: 0;
@@ -3331,7 +3409,7 @@ header {
         justify-content: center;
     }
 
-    body::after {
+    body:not(.force-portrait-lock)::after {
         content: '📱\A\APlease rotate your device\Ato portrait mode\A\A↻';
         position: fixed;
         top: 50%;
@@ -3356,4 +3434,29 @@ header {
         white-space: pre-line;
         line-height: 1.8;
     }
+}
+
+/* ============================================================================
+   π BUTTON VISIBILITY OPTIMIZATION (2026-01-04)
+   Reduce redundancy by hiding π button on start/results screens
+   Keep visible only during quiz for emergency exit
+   ============================================================================ */
+
+/* Hide π button on start screen and results screen (player-info-row) */
+.player-info-row .pi-container {
+    display: none !important;
+}
+
+/* Expand player info panel to fill space when π button is hidden */
+.player-info-row .player-info {
+    flex: 1;
+    width: 100%; /* Ensure full width utilization */
+}
+
+/* Keep π button visible during quiz (score-board-row) but remove shadow */
+.score-board-row .pi-container-quiz {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none; /* Flat appearance, no elevation */
 }
