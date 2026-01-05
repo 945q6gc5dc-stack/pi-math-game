@@ -358,6 +358,41 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+/* Avatar progress bar styling for dark mode - high visibility */
+[data-theme="dark"] .avatar-progress {
+    /* Darker background with stronger opacity for better contrast */
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+}
+
+[data-theme="dark"] .progress-text {
+    /* White text with dark shadow for strong contrast */
+    color: #ffffff;
+    text-shadow:
+        -1px -1px 0 rgba(0, 0, 0, 0.8),
+        1px -1px 0 rgba(0, 0, 0, 0.8),
+        -1px 1px 0 rgba(0, 0, 0, 0.8),
+        1px 1px 0 rgba(0, 0, 0, 0.8),
+        0 0 8px rgba(0, 0, 0, 0.9);
+}
+
+/* Answer input field - ensure proper contrast */
+[data-theme="dark"] #answer-input {
+    background: var(--color-bg-main);
+    color: var(--color-text-primary);
+    border-color: var(--color-primary);
+}
+
+[data-theme="dark"] #answer-input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.8;
+}
+
+[data-theme="dark"] #answer-input:disabled {
+    background: var(--color-bg-tertiary);
+    color: var(--color-text-muted);
+}
+
 /* =============================================================================
    END DARK MODE AVATAR STYLING
    ============================================================================= */
