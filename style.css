@@ -318,6 +318,50 @@
    END OF THEME SYSTEM
    ============================================================================= */
 
+/* =============================================================================
+   DARK MODE AVATAR STYLING
+   ============================================================================= */
+/* Special styling for avatar images with white backgrounds in dark mode */
+
+[data-theme="dark"] .avatar-container {
+    /* Subtle background gradient to blend white avatar backgrounds */
+    background: linear-gradient(135deg,
+        rgba(102, 126, 234, 0.08) 0%,
+        rgba(118, 75, 162, 0.08) 100%);
+    padding: 15px;
+    border-radius: 20px;
+    /* Soft border to separate from dark background */
+    border: 2px solid rgba(102, 126, 234, 0.2);
+    /* Subtle shadow for depth */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .avatar-image {
+    /* Slightly reduce brightness to blend better */
+    filter: brightness(0.95);
+    border-radius: 15px;
+}
+
+[data-theme="dark"] .mobile-avatar .avatar-container {
+    /* Mobile specific adjustments */
+    padding: 10px;
+    border-radius: 15px;
+}
+
+/* Profile card avatars - already have backgrounds, just soften the white */
+[data-theme="dark"] .profile-avatar-img {
+    filter: brightness(0.95);
+}
+
+[data-theme="dark"] .profile-card {
+    /* Add subtle glow to profile cards in dark mode */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* =============================================================================
+   END DARK MODE AVATAR STYLING
+   ============================================================================= */
+
 * {
     margin: 0;
     padding: 0;
