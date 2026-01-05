@@ -1147,14 +1147,8 @@
         font-size: 0.65em;
     }
 
-    .navigation-bar {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .profile-indicator {
-        text-align: center;
-    }
+    /* Removed conflicting .navigation-bar rule that was forcing vertical layout */
+    /* Navigation bar styling is handled at the top of this @media block (line 995) */
 }
 
 /* Loading Animation */
