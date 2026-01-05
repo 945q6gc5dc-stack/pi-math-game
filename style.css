@@ -2410,13 +2410,23 @@ header {
         background: linear-gradient(135deg, #e8ebfc 0%, #f5f7ff 100%);
     }
 
-    /* Hide "Pi" text and "3.14159265..." decorative elements */
+    /* Hide "Pi" text letters but keep π symbol visible */
     .main-title {
-        display: none;
+        display: flex !important; /* Override to keep structure */
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
+
+    .letter-p,
+    .letter-i {
+        display: none; /* Hide "Pi" text letters */
     }
 
     .pi-value {
-        display: none;
+        display: none; /* Hide "3.14159265..." */
     }
 
     /* Large centered π symbol - fills left column height */
@@ -2432,6 +2442,7 @@ header {
         font-size: 2.5rem; /* 40px - prominent brand symbol */
         margin: 0;
         line-height: 1;
+        display: block !important; /* Ensure π is visible */
     }
 
     /* Title: "Practice Intelligence" only */
