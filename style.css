@@ -10,7 +10,18 @@
  * [2026-01-05] Responsive Layout & Touch Device Optimization
  * -----------------------------------------------------------
  *
- * 1. GAME TITLE WRAPPING FIX
+ * 1. MOBILE HEADER REDESIGN (Ultra-Compact Horizontal Layout)
+ *    Problem: Mobile header taking 140-160px vertical space with two stacked boxes
+ *    Solution: Horizontal layout with large π symbol (50px left column)
+ *    - Desktop: Two-box vertical layout (unchanged)
+ *    - Mobile: Single-row horizontal layout (π left | title right)
+ *    - Height: 50px (saves ~100px vertical space = 66% reduction!)
+ *    - Content: Large π symbol (2.5rem) + "Practice Intelligence" only
+ *    - Hidden: "Pi" text, "3.14159265...", "Master Math Through Play!"
+ *    - Brand focus: Prominent π symbol for instant recognition
+ *    Result: More space for profile cards, "Add Profile" button now visible
+ *
+ * 2. GAME TITLE WRAPPING FIX
  *    Problem: "Practice Intelligence" title wrapping to two lines on mobile
  *    Solution: Implemented responsive font sizing using CSS clamp()
  *    - Desktop: 2.8em (fixed size)
@@ -19,7 +30,7 @@
  *    - Reduced mobile padding from 20px to 15px for more text space
  *    Result: Title stays on single line across all devices (320px - 1920px+)
  *
- * 2. PROFILE GRID LAYOUT FIX
+ * 3. PROFILE GRID LAYOUT FIX
  *    Problem: Profile cards overflowing, requiring scroll; no maximum limit
  *    Solution: Fixed 2×2 grid layout with 4 profile maximum
  *    - Changed from auto-fit to fixed grid: repeat(2, 200px)
@@ -33,7 +44,7 @@
  *    - Button disabled when limit reached
  *    Result: All 4 profiles always visible without scrolling
  *
- * 3. HOVER EFFECTS TOUCH OPTIMIZATION
+ * 4. HOVER EFFECTS TOUCH OPTIMIZATION
  *    Problem: Hover effects cause UX issues on touch devices
  *    - Sticky hover: Effects persist after tap (cards stay lifted, buttons stay scaled)
  *    - Double-tap required: Hidden delete button needs two taps on mobile
@@ -488,7 +499,7 @@ header {
 /* Profile Selection */
 .profile-selection {
     text-align: center;
-    padding: 40px;
+    padding: 25px; /* Reduced from 40px for better fit */
     background: #f8f9fa;
     border-radius: 15px;
     margin-bottom: 30px;
@@ -497,25 +508,25 @@ header {
 
 .profile-selection h3 {
     color: #667eea;
-    font-size: 1.8em;
-    margin-bottom: 30px;
+    font-size: 1.5em; /* Reduced from 1.8em */
+    margin-bottom: 20px; /* Reduced from 30px */
 }
 
 .profile-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px; /* Reduced from 20px */
     align-items: center;
     overflow: visible;
 }
 
 .profile-list {
     display: grid;
-    grid-template-columns: repeat(2, 200px); /* Fixed 2 columns for 2x2 grid (max 4 profiles) */
+    grid-template-columns: repeat(2, 140px); /* Reduced from 200px to 140px for better fit */
     grid-template-rows: repeat(2, auto); /* Fixed 2 rows */
-    gap: 20px;
+    gap: 15px; /* Reduced from 20px */
     justify-content: center;
-    padding: 15px;
+    padding: 10px; /* Reduced from 15px */
     max-height: none; /* Remove scrolling - all 4 cards should be visible */
     overflow: visible;
 }
@@ -532,8 +543,8 @@ header {
     display: flex;
     flex-direction: column;
     aspect-ratio: 5 / 7; /* Maintain consistent card proportions */
-    width: 200px;
-    max-width: 200px;
+    width: 140px; /* Reduced from 200px */
+    max-width: 140px;
 }
 
 .profile-card:hover {
@@ -2367,46 +2378,74 @@ header {
         display: none !important;
     }
 
-    /* MOBILE HEADER OPTIMIZATION - Target: 40px height */
+    /* MOBILE HEADER OPTIMIZATION - Horizontal Layout (Option A + Alternative 2)
+       Ultra-compact: Large π symbol left, "Practice Intelligence" right only
+       Saves ~90px vertical space for better content visibility */
     .logo-container {
-        flex-direction: column; /* Stack vertically on mobile */
+        flex-direction: row !important; /* Horizontal layout on mobile */
+        height: 50px; /* Fixed compact height */
         border: 1px solid #667eea;
+        padding: 0;
+        align-items: stretch;
     }
 
     .logo-left {
-        flex: 0 0 auto;
-        padding: 20px;
-        border-right: none;
-        border-bottom: 1px solid #667eea;
+        flex: 0 0 50px; /* Fixed 50px width for π */
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: white;
+        border-right: 1px solid #667eea;
+        border-bottom: none;
     }
 
     .logo-right {
-        padding: 15px 20px; /* Reduced padding for more text space */
-        align-items: center;
-        text-align: center;
+        flex: 1; /* Take remaining space */
+        padding: 0 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        background: linear-gradient(135deg, #e8ebfc 0%, #f5f7ff 100%);
     }
 
-    /* Compact π Pi text */
-    .pi-symbol {
-        font-size: 2rem; /* 2rem mobile = 32px (relative to root, not parent) */
-    }
-
+    /* Hide "Pi" text and "3.14159265..." decorative elements */
     .main-title {
-        font-size: 1.5em;
-    }
-
-    .title-main {
-        font-size: clamp(1.1em, 4vw, 1.4em); /* Responsive font sizing: min 1.1em, ideal 4vw, max 1.4em */
-        white-space: nowrap; /* Ensure no wrapping */
-        line-height: 1.2;
-    }
-
-    .title-sub {
-        font-size: 0.9em; /* Proportionally smaller */
+        display: none;
     }
 
     .pi-value {
-        font-size: 0.9rem;
+        display: none;
+    }
+
+    /* Large centered π symbol - fills left column height */
+    .pi-text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    .pi-symbol {
+        font-size: 2.5rem; /* 40px - prominent brand symbol */
+        margin: 0;
+        line-height: 1;
+    }
+
+    /* Title: "Practice Intelligence" only */
+    .title-main {
+        font-size: clamp(1em, 3.5vw, 1.2em); /* Responsive: 1em-1.2em */
+        white-space: nowrap;
+        line-height: 1;
+        margin: 0;
+        font-weight: 600;
+    }
+
+    /* Hide subtitle "Master Math Through Play!" for ultra-compact design */
+    .title-sub {
+        display: none;
     }
 
     /* Mobile: π container and panel layout */
@@ -2980,59 +3019,60 @@ header {
     }
 
     .profile-selection {
-        padding: 20px;
+        padding: 15px;
     }
 
     .profile-selection h3 {
-        font-size: 1.5em;
+        font-size: 1.3em;
+        margin-bottom: 15px;
     }
 
-    /* Mobile: 2x2 grid with smaller cards */
+    /* Mobile: 2x2 grid with smaller cards to fit button on screen */
     .profile-list {
-        grid-template-columns: repeat(2, minmax(150px, 160px));
-        gap: 12px;
-        padding: 10px;
-    }
-
-    .profile-card {
-        width: 100%;
-        max-width: 160px;
-    }
-}
-
-/* Tablet/Large Mobile (600-900px): 2x2 grid with medium cards */
-@media (max-width: 900px) and (min-width: 600px) {
-    .profile-list {
-        grid-template-columns: repeat(2, 180px);
-        gap: 15px;
-    }
-
-    .profile-card {
-        width: 180px;
-        max-width: 180px;
-    }
-}
-
-/* Extra small phones (<375px): 2x2 grid with smallest cards */
-@media (max-width: 374px) {
-    .profile-list {
-        grid-template-columns: repeat(2, minmax(140px, 150px));
+        grid-template-columns: repeat(2, minmax(130px, 140px));
         gap: 10px;
         padding: 8px;
     }
 
     .profile-card {
         width: 100%;
-        max-width: 150px;
+        max-width: 140px;
+    }
+}
+
+/* Tablet/Large Mobile (600-900px): 2x2 grid with 140px cards (matches desktop) */
+@media (max-width: 900px) and (min-width: 600px) {
+    .profile-list {
+        grid-template-columns: repeat(2, 140px);
+        gap: 15px;
+    }
+
+    .profile-card {
+        width: 140px;
+        max-width: 140px;
+    }
+}
+
+/* Extra small phones (<375px): 2x2 grid with smallest cards */
+@media (max-width: 374px) {
+    .profile-list {
+        grid-template-columns: repeat(2, minmax(120px, 130px));
+        gap: 8px;
+        padding: 6px;
+    }
+
+    .profile-card {
+        width: 100%;
+        max-width: 130px;
     }
 
     .profile-selection h3 {
-        font-size: 1.3em;
-        margin-bottom: 20px;
+        font-size: 1.2em;
+        margin-bottom: 12px;
     }
 
     .profile-selection {
-        padding: 15px;
+        padding: 12px;
     }
 }
 
