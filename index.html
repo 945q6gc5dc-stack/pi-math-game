@@ -11,8 +11,22 @@
     <meta name="orientation" content="portrait">
     <meta name="author" content="Kumar Srinivasan">
     <meta name="description" content="Pi - Practice Intelligence: A fun and interactive math game for children to improve their arithmetic skills through engaging problem-solving exercises">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#667eea" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
     <title>π - Practice Intelligence</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><style>text{fill:%23667eea}@media(prefers-color-scheme:dark){text{fill:%23f093fb}}</style><text y=%22.9em%22 font-size=%2290%22>π</text></svg>">
+
+    <!-- FOUC Prevention: Initialize theme before CSS loads -->
+    <script>
+        (function() {
+            const saved = localStorage.getItem('pi-app-theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (systemPrefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -32,6 +46,11 @@
                     <h2 class="title-main">Practice Intelligence</h2>
                     <p class="title-sub">Master Math Through Play!</p>
                 </div>
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="theme-toggle-btn" title="Switch theme" aria-label="Switch between light and dark mode">
+                    <span class="theme-icon sun-icon">☀️</span>
+                    <span class="theme-icon moon-icon hidden">🌙</span>
+                </button>
             </div>
         </header>
 

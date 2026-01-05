@@ -2728,5 +2728,123 @@ function saveLevelCompletion(level, crowns) {
     }
 }
 
+// =============================================================================
+// THEME MANAGER - Dark Mode Support
+// =============================================================================
+
+const ThemeManager = {
+    STORAGE_KEY: 'pi-app-theme',
+    THEMES: { LIGHT: 'light', DARK: 'dark' },
+
+    // Initialize theme system
+    init() {
+        const theme = this.getPreferredTheme();
+        this.applyTheme(theme);
+        this.setupToggleButton();
+        this.watchSystemPreference();
+        this.updateToggleIcon(theme);
+    },
+
+    // Get user's preferred theme
+    getPreferredTheme() {
+        // 1. Check localStorage first (manual preference)
+        const saved = localStorage.getItem(this.STORAGE_KEY);
+        if (saved && Object.values(this.THEMES).includes(saved)) {
+            return saved;
+        }
+
+        // 2. Fall back to system preference
+        return this.getSystemPreference();
+    },
+
+    // Get system color scheme preference
+    getSystemPreference() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? this.THEMES.DARK
+            : this.THEMES.LIGHT;
+    },
+
+    // Apply theme to document
+    applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+
+        // Update meta theme-color for mobile browsers
+        const metaThemeLight = document.querySelector('meta[name="theme-color"][media*="light"]');
+        const metaThemeDark = document.querySelector('meta[name="theme-color"][media*="dark"]');
+
+        if (theme === this.THEMES.DARK) {
+            if (metaThemeLight) metaThemeLight.content = '#1a1a1a';
+            if (metaThemeDark) metaThemeDark.content = '#1a1a1a';
+        } else {
+            if (metaThemeLight) metaThemeLight.content = '#667eea';
+            if (metaThemeDark) metaThemeDark.content = '#667eea';
+        }
+    },
+
+    // Save user preference
+    setTheme(theme) {
+        localStorage.setItem(this.STORAGE_KEY, theme);
+        this.applyTheme(theme);
+        this.updateToggleIcon(theme);
+    },
+
+    // Toggle between light and dark
+    toggle() {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === this.THEMES.DARK ? this.THEMES.LIGHT : this.THEMES.DARK;
+        this.setTheme(next);
+
+        // Add animation class
+        const toggleBtn = document.getElementById('theme-toggle');
+        if (toggleBtn) {
+            toggleBtn.classList.add('animating');
+            setTimeout(() => toggleBtn.classList.remove('animating'), 500);
+        }
+    },
+
+    // Update toggle button icon based on current theme
+    updateToggleIcon(theme) {
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
+
+        if (!sunIcon || !moonIcon) return;
+
+        if (theme === this.THEMES.DARK) {
+            // Dark mode active - show sun icon (to switch to light)
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+        } else {
+            // Light mode active - show moon icon (to switch to dark)
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+        }
+    },
+
+    // Setup toggle button click handler
+    setupToggleButton() {
+        const toggleBtn = document.getElementById('theme-toggle');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => this.toggle());
+        }
+    },
+
+    // Listen for system preference changes
+    watchSystemPreference() {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        mediaQuery.addEventListener('change', (e) => {
+            // Only update if user hasn't manually set a preference
+            const saved = localStorage.getItem(this.STORAGE_KEY);
+            if (!saved) {
+                const newTheme = e.matches ? this.THEMES.DARK : this.THEMES.LIGHT;
+                this.applyTheme(newTheme);
+                this.updateToggleIcon(newTheme);
+            }
+        });
+    }
+};
+
+// Initialize theme manager
+ThemeManager.init();
+
 // Initialize the game when the page loads
 init();
