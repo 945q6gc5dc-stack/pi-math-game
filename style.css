@@ -240,7 +240,7 @@
     --color-text-secondary: #b0b0b0; /* Medium gray secondary */
     --color-text-muted: #888888; /* Same as light mode (balanced) */
     --color-text-light: #666666; /* Darker in dark mode */
-    --color-text-inverse: #1a1a1a; /* Dark text for light elements */
+    --color-text-inverse: #ffffff; /* White text for colored button backgrounds */
 
     /* === BORDER COLORS === */
     --color-border: rgba(136, 150, 238, 0.4); /* Increased opacity for visibility */
@@ -423,9 +423,9 @@ header {
     align-items: center;
     justify-content: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 3px 8px rgba(102, 126, 234, 0.3);
+    box-shadow: var(--shadow-sm);
     position: relative;
-    background: white;
+    background: var(--color-bg-main);
     border: none;
     z-index: 1;
     overflow: hidden;
@@ -653,7 +653,7 @@ header {
 .pi-value {
     font-family: 'Courier New', monospace;
     font-size: 0.75em;
-    color: #888;
+    color: var(--color-text-muted);
     letter-spacing: 0.15em;
     margin-top: 0;
     line-height: 1.2;
@@ -679,7 +679,7 @@ header {
 
 .grade-selector-wrapper label {
     font-size: 0.9em;
-    color: #666;
+    color: var(--color-text-secondary);
     white-space: nowrap;
 }
 
@@ -692,7 +692,7 @@ header {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     transition: all 0.3s ease;
     font-weight: 600;
-    color: #667eea;
+    color: var(--color-primary);
     pointer-events: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -800,7 +800,7 @@ header {
 }
 
 .profile-selection h3 {
-    color: #667eea;
+    color: var(--color-primary);
     font-size: 1.5em; /* Reduced from 1.8em */
     margin-bottom: 20px; /* Reduced from 30px */
 }
@@ -825,12 +825,12 @@ header {
 }
 
 .profile-card {
-    background: white;
+    background: var(--color-card-bg);
     padding: 0;
     border-radius: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
     position: relative;
     overflow: visible;
     display: flex;
@@ -870,16 +870,16 @@ header {
     word-break: break-word;
     position: relative;
     z-index: 2;
-    color: #2c3e50;
+    color: var(--color-text-primary);
     text-shadow:
-        -1px -1px 0 white,
-        1px -1px 0 white,
-        -1px 1px 0 white,
-        1px 1px 0 white,
-        0 0 10px rgba(255, 255, 255, 0.9);
+        -1px -1px 0 var(--color-bg-main),
+        1px -1px 0 var(--color-bg-main),
+        -1px 1px 0 var(--color-bg-main),
+        1px 1px 0 var(--color-bg-main),
+        0 0 10px rgba(var(--color-primary-rgb), 0.3);
     padding: 12px 20px;
     margin-top: auto;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(var(--color-primary-rgb), 0.1);
     backdrop-filter: blur(10px);
     display: inline-block;
     text-align: center;
@@ -888,27 +888,27 @@ header {
 
 .profile-card .profile-crowns {
     font-size: 1.1em;
-    color: #d35400;
+    color: var(--color-warning-dark);
     font-weight: bold;
     position: absolute;
     top: -8px;
     left: 8px;
     z-index: 3;
     text-shadow:
-        -1px -1px 0 white,
-        1px -1px 0 white,
-        -1px 1px 0 white,
-        1px 1px 0 white,
-        0 0 10px rgba(255, 255, 255, 0.9);
+        -1px -1px 0 var(--color-bg-main),
+        1px -1px 0 var(--color-bg-main),
+        -1px 1px 0 var(--color-bg-main),
+        1px 1px 0 var(--color-bg-main),
+        0 0 10px rgba(var(--color-primary-rgb), 0.3);
     padding: 6px 10px;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(var(--color-primary-rgb), 0.1);
     backdrop-filter: blur(10px);
     border-radius: 8px;
     white-space: nowrap;
     display: flex;
     align-items: center;
     gap: 5px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-sm);
 }
 
 .profile-crowns .crown-icon {
@@ -928,15 +928,15 @@ header {
 }
 
 .profile-card:hover .profile-crowns {
-    color: #e67e22;
+    color: var(--color-warning);
 }
 
 .profile-card .delete-profile {
     position: absolute;
     top: -10px;
     right: -10px;
-    background: #dc3545;
-    color: white;
+    background: var(--color-danger);
+    color: var(--color-text-inverse);
     border: none;
     border-radius: 50%;
     width: 32px;
@@ -945,10 +945,10 @@ header {
     font-size: 1.2em;
     display: none;
     z-index: 10;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-md);
     transition: all 0.3s ease;
     line-height: 1;
-    border: 3px solid white;
+    border: 3px solid var(--color-bg-main);
 }
 
 .profile-card:hover .delete-profile {
@@ -958,7 +958,7 @@ header {
 }
 
 .profile-card .delete-profile:hover {
-    background: #c82333;
+    background: var(--color-danger-dark);
     transform: scale(1.1);
 }
 
@@ -972,9 +972,9 @@ header {
 
 /* π Symbol Container */
 .pi-container {
-    background: white;
+    background: var(--color-bg-main);
     border-radius: 15px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -988,9 +988,9 @@ header {
 /* Player Info - Panel Container */
 .player-info {
     padding: 12px;
-    background: white;
+    background: var(--color-bg-main);
     border-radius: 15px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
     flex: 1;
 }
 
@@ -1028,32 +1028,32 @@ header {
 .desktop-player-label {
     font-size: 0.9em;
     font-weight: bold;
-    color: #666;
+    color: var(--color-text-secondary);
     text-transform: uppercase;
 }
 
 .desktop-player-name {
     font-size: 1.1em;
     font-weight: bold;
-    color: #667eea;
+    color: var(--color-primary);
 }
 
 .desktop-comma {
-    color: #667eea;
+    color: var(--color-primary);
     font-weight: bold;
 }
 
 .desktop-grade-label {
     font-size: 0.9em;
     font-weight: bold;
-    color: #666;
+    color: var(--color-text-secondary);
     text-transform: uppercase;
 }
 
 .desktop-grade-num {
     font-size: 1.1em;
     font-weight: bold;
-    color: #667eea;
+    color: var(--color-primary);
 }
 
 /* Switch Button (Circular) */
@@ -1218,7 +1218,7 @@ header {
 .crowns-label {
     font-size: clamp(0.35em, 2vw, 0.5em);
     font-weight: bold;
-    color: #d35400;
+    color: var(--color-warning-dark);
     margin-right: 10px;
     white-space: nowrap;
 }
@@ -1299,19 +1299,19 @@ header {
 }
 
 .modal-content {
-    background: white;
+    background: var(--color-bg-main);
     padding: 40px;
     border-radius: 20px;
     text-align: center;
     max-width: 400px;
     width: 90%;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-xl);
     position: relative;
     overflow: visible;
 }
 
 .modal-content h3 {
-    color: #667eea;
+    color: var(--color-primary);
     font-size: 1.8em;
     margin-bottom: 25px;
 }
@@ -1320,15 +1320,17 @@ header {
     width: 100%;
     padding: 15px;
     font-size: 1.2em;
-    border: 2px solid #667eea;
+    border: 2px solid var(--color-primary);
     border-radius: 10px;
     margin-bottom: 25px;
     text-align: center;
+    background: var(--color-bg-main);
+    color: var(--color-text-primary);
 }
 
 .modal-content input:focus {
     outline: none;
-    border-color: #764ba2;
+    border-color: var(--color-primary-dark);
 }
 
 .avatar-gender-selection {
@@ -1337,7 +1339,7 @@ header {
 
 .avatar-gender-selection label {
     display: block;
-    color: #667eea;
+    color: var(--color-primary);
     font-weight: bold;
     font-size: 1.1em;
     margin-bottom: 15px;
@@ -1356,7 +1358,7 @@ header {
 
 .profile-grade-selection label {
     display: block;
-    color: #667eea;
+    color: var(--color-primary);
     font-weight: bold;
     font-size: 1.1em;
     margin-bottom: 15px;
@@ -1365,24 +1367,24 @@ header {
 .profile-grade-selection select {
     width: 100%;
     padding: 12px 15px;
-    border: 2px solid #667eea;
+    border: 2px solid var(--color-primary);
     border-radius: 10px;
     font-size: 16px;
     background-color: white;
-    color: #333;
+    color: var(--color-text-primary);
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .profile-grade-selection select:hover {
-    background-color: #f8f9ff;
-    border-color: #5568d3;
+    background-color: var(--color-bg-hover);
+    border-color: var(--color-primary-dark);
 }
 
 .profile-grade-selection select:focus {
     outline: none;
-    border-color: #5568d3;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: var(--color-primary-dark);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
 }
 
 .gender-option {
@@ -1391,15 +1393,15 @@ header {
     align-items: center;
     gap: 8px;
     padding: 15px;
-    border: 3px solid #667eea;
+    border: 3px solid var(--color-primary);
     border-radius: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: #d4e8f5;
+    background: var(--color-bg-secondary);
 }
 
 .gender-option:hover {
-    background: #c0ddef;
+    background: var(--color-bg-tertiary);
     transform: translateY(-2px);
 }
 
@@ -1410,14 +1412,14 @@ header {
 }
 
 .gender-option input[type="radio"]:checked + .gender-label {
-    color: #667eea;
+    color: var(--color-text-inverse);
     font-weight: bold;
 }
 
 .gender-option:has(input[type="radio"]:checked) {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-color: #764ba2;
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    background: var(--gradient-primary);
+    border-color: var(--color-primary-dark);
+    box-shadow: var(--shadow-lg);
 }
 
 .avatar-preview {
@@ -1439,17 +1441,17 @@ header {
 }
 
 .btn-secondary {
-    background: #6c757d;
-    color: white;
+    background: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
 }
 
 .btn-danger {
-    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--color-error) 0%, var(--color-danger-darker) 100%);
+    color: var(--color-text-inverse);
 }
 
 .btn-danger:hover {
-    background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+    background: linear-gradient(135deg, var(--color-danger-darker) 0%, var(--color-danger-dark) 100%);
 }
 
 .delete-avatar-container {
@@ -1461,7 +1463,7 @@ header {
     width: 140px;
     height: 140px;
     border-radius: 50%;
-    border: 4px solid #e74c3c;
+    border: 4px solid var(--color-error);
     margin-left: auto;
     margin-right: auto;
 }
@@ -1476,7 +1478,7 @@ header {
 }
 
 .delete-warning {
-    color: #e74c3c;
+    color: var(--color-error);
     font-weight: bold;
     margin: 15px 0 25px 0;
     font-size: 1.1em;
@@ -1589,7 +1591,7 @@ header {
 }
 
 .progress-text {
-    color: #2c3e50;
+    color: var(--color-text-primary);
     font-weight: bold;
     font-size: 1.4em;
     text-shadow:
@@ -1606,7 +1608,7 @@ header {
 }
 
 .start-screen h2 {
-    color: #667eea;
+    color: var(--color-primary);
     font-size: 2em;
     margin-bottom: 25px;
 }
@@ -1622,7 +1624,7 @@ header {
 
 .operation-label {
     font-weight: 600;
-    color: #667eea;
+    color: var(--color-primary);
     font-size: 0.95em;
     text-align: center;
 }
@@ -1652,7 +1654,7 @@ header {
     font-family: 'Poppins', sans-serif;
     font-size: 0.8em;
     font-weight: 600;
-    color: #666;
+    color: var(--color-text-secondary);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
@@ -1661,7 +1663,7 @@ header {
 
 .operation-pill:hover {
     background: rgba(102, 126, 234, 0.15);
-    color: #667eea;
+    color: var(--color-primary);
     transform: translateY(-2px);
 }
 
@@ -1884,7 +1886,7 @@ header {
 
 /* Circular Button Styling - matches progress button size */
 .btn-circular {
-    background: white;
+    background: var(--color-bg-main);
     border: none;
     cursor: pointer;
     padding: 0;
@@ -1898,7 +1900,7 @@ header {
     flex-shrink: 0;
     position: relative;
     z-index: 1;
-    box-shadow: 0 3px 8px rgba(102, 126, 234, 0.3);
+    box-shadow: var(--shadow-sm);
     overflow: hidden;
 }
 
@@ -1940,7 +1942,7 @@ header {
     border-radius: 50% !important;
     padding: 0 !important;
     margin: 0 !important;
-    background: white !important;
+    background: var(--color-bg-main) !important;
     border: none !important;
     display: flex !important;
     align-items: center;
@@ -1968,7 +1970,7 @@ header {
 
 .game-info {
     font-size: 1.2em;
-    color: #555;
+    color: var(--color-text-secondary);
     margin: 0 0 5px 0;
 }
 
@@ -1978,11 +1980,11 @@ header {
 
 .game-info span {
     font-weight: bold;
-    color: #667eea;
+    color: var(--color-primary);
 }
 
 .game-info .mission-number {
-    color: #d35400;
+    color: var(--color-warning-dark);
     font-size: 1.2em;
 }
 
@@ -2010,7 +2012,7 @@ header {
 }
 
 .results-screen h2 {
-    color: #667eea;
+    color: var(--color-primary);
     font-size: clamp(1.2em, 3.5vw, 1.8em);
     margin-bottom: 20px;
     white-space: normal;
@@ -2021,11 +2023,11 @@ header {
 }
 
 .results-stats {
-    background: white;
+    background: var(--color-bg-main);
     padding: 20px;
     border-radius: 15px;
     margin-bottom: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-md);
 }
 
 .result-item {
@@ -2042,21 +2044,21 @@ header {
 
 .result-label {
     font-size: 1.1em;
-    color: #555;
+    color: var(--color-text-secondary);
     font-weight: bold;
 }
 
 .result-value {
     font-size: 1.5em;
-    color: #667eea;
+    color: var(--color-primary);
     font-weight: bold;
 }
 
 .level-up-panel {
-    background: white;
+    background: var(--color-bg-main);
     padding: 45px 30px;
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-md);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2077,7 +2079,7 @@ header {
 }
 
 .level-up-panel h3 {
-    color: #667eea;
+    color: var(--color-primary);
     font-size: clamp(1.2em, 4vw, 2em);
     margin-bottom: 20px;
     font-weight: bold;
@@ -2089,7 +2091,7 @@ header {
 
 .mission-details {
     font-size: 1.3em;
-    color: #555;
+    color: var(--color-text-secondary);
     margin: 5px 0;
     font-weight: 500;
     text-align: center;
@@ -2109,7 +2111,7 @@ header {
 
 .mission-details span {
     font-weight: bold;
-    color: #d35400;
+    color: var(--color-warning-dark);
     font-size: 1.2em;
 }
 
@@ -2128,11 +2130,11 @@ header {
 .problem-text {
     font-size: clamp(1.5em, 5vw, 2.8em);
     font-weight: bold;
-    color: #667eea;
+    color: var(--color-primary);
     padding: 28px 35px;
-    background: white;
+    background: var(--color-bg-main);
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-md);
     min-height: 105px;
     display: flex;
     align-items: center;
@@ -2180,7 +2182,7 @@ header {
 .problem-vertical-number {
     min-width: 3em;
     text-align: right;
-    color: #667eea;
+    color: var(--color-primary);
 }
 
 .problem-vertical-separator {
@@ -2192,7 +2194,7 @@ header {
 }
 
 .problem-vertical-result {
-    color: #999;
+    color: var(--color-text-light);
     font-size: 0.9em;
     text-align: right;
 }
@@ -2209,7 +2211,7 @@ header {
 #answer-input {
     padding: 15px 20px;
     font-size: 1.5em;
-    border: 3px solid #667eea;
+    border: 3px solid var(--color-primary);
     border-radius: 10px;
     width: 70%;
     flex: 0 0 70%;
@@ -2220,7 +2222,7 @@ header {
 
 #answer-input:focus {
     outline: none;
-    border-color: #764ba2;
+    border-color: var(--color-primary-dark);
     transform: scale(1.05);
 }
 
@@ -2247,10 +2249,10 @@ header {
 
 .number-pad-container {
     display: none; /* Hidden by default, shown on mobile */
-    background: white;
+    background: var(--color-bg-main);
     border-radius: 12px;
     padding: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-md);
     margin-top: 10px;
 }
 
@@ -2271,12 +2273,12 @@ header {
 
 .number-pad-display {
     background: #f8f9fa;
-    border: 2px solid #667eea;
+    border: 2px solid var(--color-primary);
     border-radius: 8px;
     padding: 12px;
     font-size: 1.5em;
     font-weight: bold;
-    color: #667eea;
+    color: var(--color-primary);
     text-align: center;
     min-height: 44px;
     flex: 1;
@@ -2290,7 +2292,7 @@ header {
 }
 
 .number-pad-display.negative {
-    color: #e74c3c;
+    color: var(--color-error);
 }
 
 .number-pad-send-btn {
@@ -2302,8 +2304,8 @@ header {
     background-size: 95%;
     background-position: center;
     background-repeat: no-repeat;
-    background-color: #667eea;
-    border: 2px solid #667eea;
+    background-color: var(--color-primary);
+    border: 2px solid var(--color-primary);
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -2325,9 +2327,9 @@ header {
     height: 50px;
     font-size: 1.8em;
     font-weight: bold;
-    color: #667eea;
+    color: var(--color-primary);
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border: 2px solid #667eea;
+    border: 2px solid var(--color-primary);
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -2351,7 +2353,7 @@ header {
 }
 
 .number-btn.sign {
-    color: #e74c3c;
+    color: var(--color-error);
 }
 
 /* ============================================
@@ -2431,16 +2433,16 @@ header {
 }
 
 #feedback-desktop.correct {
-    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-    color: #155724;
-    border: 3px solid #28a745;
+    background: linear-gradient(135deg, var(--color-success-light) 0%, var(--color-success-border) 100%);
+    color: var(--color-text-primary);
+    border: 3px solid var(--color-success);
     animation: celebrate 0.5s ease;
 }
 
 #feedback-desktop.incorrect {
-    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-    color: #721c24;
-    border: 3px solid #dc3545;
+    background: linear-gradient(135deg, var(--color-danger-light) 0%, var(--color-danger-border) 100%);
+    color: var(--color-text-primary);
+    border: 3px solid var(--color-danger);
     animation: shake 0.5s ease;
 }
 
@@ -2456,10 +2458,10 @@ header {
     font-weight: bold;
     display: none;
     text-align: center;
-    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-    color: #856404;
-    border: 3px solid #ffc107;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, var(--color-warning-light) 0%, var(--color-warning) 100%);
+    color: var(--color-text-primary);
+    border: 3px solid var(--color-warning);
+    box-shadow: var(--shadow-md);
     z-index: 10;
 }
 
@@ -2471,22 +2473,22 @@ header {
     font-weight: bold;
     display: none;
     text-align: center;
-    background: #f8d7da;
-    color: #721c24;
-    border: 2px solid #f5c6cb;
+    background: var(--color-danger-light);
+    color: var(--color-text-primary);
+    border: 2px solid var(--color-danger-border);
 }
 
 .feedback.correct {
-    background: #d4edda;
-    color: #155724;
-    border: 2px solid #c3e6cb;
+    background: var(--color-success-light);
+    color: var(--color-text-primary);
+    border: 2px solid var(--color-success-border);
     animation: celebrate 0.5s ease;
 }
 
 .feedback.incorrect {
-    background: #f8d7da;
-    color: #721c24;
-    border: 2px solid #f5c6cb;
+    background: var(--color-danger-light);
+    color: var(--color-text-primary);
+    border: 2px solid var(--color-danger-border);
     animation: shake 0.5s ease;
 }
 
@@ -2545,14 +2547,14 @@ header {
 
 .stats-panel h3 {
     text-align: center;
-    color: #667eea;
+    color: var(--color-primary);
     margin-bottom: 15px;
     font-size: 1.3em;
 }
 
 #stats-section h2 {
     text-align: center;
-    color: #667eea;
+    color: var(--color-primary);
     margin-bottom: 15px;
     font-size: 1.5em;
 }
@@ -2564,11 +2566,11 @@ header {
 }
 
 .stat-card {
-    background: white;
+    background: var(--color-bg-main);
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
     transition: all 0.3s ease;
 }
 
@@ -2580,12 +2582,12 @@ header {
 .stat-value {
     font-size: 2.5em;
     font-weight: bold;
-    color: #667eea;
+    color: var(--color-primary);
     margin-bottom: 5px;
 }
 
 .stat-label {
-    color: #666;
+    color: var(--color-text-secondary);
     font-size: 0.95em;
 }
 
@@ -2812,19 +2814,19 @@ header {
     .mobile-player-text {
         font-size: 0.75em;
         font-weight: 600;
-        color: #667eea;
+        color: var(--color-primary);
         text-transform: uppercase;
         letter-spacing: 0.02em;
         flex: 0 1 auto; /* Don't grow, shrink if needed, auto width */
     }
 
     .mobile-prefix {
-        color: #666;
+        color: var(--color-text-secondary);
         font-weight: 500;
     }
 
     .mobile-player-name {
-        color: #667eea;
+        color: var(--color-primary);
         font-weight: 700;
     }
 
@@ -2833,13 +2835,13 @@ header {
     }
 
     .mobile-grade-text {
-        color: #666;
+        color: var(--color-text-secondary);
         font-weight: 500;
         margin-left: 4px;
     }
 
     .mobile-grade-num {
-        color: #667eea;
+        color: var(--color-primary);
         font-weight: 700;
     }
 
@@ -2856,7 +2858,7 @@ header {
         width: 50px; /* Scaled down from 70px to fit emoji tightly */
         height: 50px;
         padding: 0;
-        background: white;
+        background: var(--color-bg-main);
         border: none;
         border-radius: 50%; /* Circular button */
         cursor: pointer;
@@ -2865,7 +2867,7 @@ header {
         align-items: center;
         justify-content: center;
         transition: all 0.3s ease;
-        box-shadow: 0 3px 8px rgba(102, 126, 234, 0.3);
+        box-shadow: var(--shadow-sm);
         overflow: hidden;
         font-size: 1.4em; /* Scaled down from 2em to fit tighter */
     }
@@ -2945,7 +2947,7 @@ header {
         width: 70px;
         height: 70px;
         padding: 0; /* Remove padding for circular button */
-        background: white;
+        background: var(--color-bg-main);
         border: none;
         border-radius: 50%; /* CIRCULAR button */
         cursor: pointer;
@@ -2955,7 +2957,7 @@ header {
         transition: all 0.3s ease;
         position: relative;
         z-index: 1; /* Below the rotating border */
-        box-shadow: 0 3px 8px rgba(102, 126, 234, 0.3);
+        box-shadow: var(--shadow-sm);
         overflow: hidden;
     }
 
@@ -3284,7 +3286,7 @@ header {
     .mobile-avatar .progress-text {
         font-size: 0.9em;
         font-weight: bold;
-        color: #2c3e50;
+        color: var(--color-text-primary);
         text-shadow: 0 0 2px rgba(255, 255, 255, 0.8); /* Subtle glow for readability */
     }
 
@@ -3536,7 +3538,7 @@ header {
 }
 
 .map-subtitle {
-    color: #667eea;
+    color: var(--color-primary);
     font-size: 1em;
     margin-top: -10px;
     margin-bottom: 25px;
@@ -3595,9 +3597,9 @@ header {
     gap: 8px;
     margin-top: 15px;
     padding: 10px 20px;
-    background: white;
+    background: var(--color-bg-main);
     border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
 }
 
 .operation-legend-icon {
@@ -3609,7 +3611,7 @@ header {
 .operation-legend-text {
     font-size: 0.95em;
     font-weight: 600;
-    color: #333;
+    color: var(--color-text-primary);
 }
 
 /* Level Node - positioned absolutely on map */
@@ -3620,12 +3622,12 @@ header {
 }
 
 .level-card {
-    background: white;
+    background: var(--color-bg-main);
     border-radius: 50%;
     padding: 8px;
     width: 50px;
     height: 50px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-sm);
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -3688,7 +3690,7 @@ header {
 }
 
 .level-card.current .level-number {
-    color: #d35400;
+    color: var(--color-warning-dark);
 }
 
 .level-card.locked .level-number {
@@ -3697,7 +3699,7 @@ header {
 
 .level-info {
     font-size: 0.75em;
-    color: #666;
+    color: var(--color-text-secondary);
     margin-bottom: 5px;
 }
 
@@ -3713,10 +3715,10 @@ header {
     display: flex;
     align-items: center;
     gap: 1px;
-    background: white;
+    background: var(--color-bg-main);
     border-radius: 10px;
     padding: 2px 4px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-sm);
 }
 
 .level-crowns img {
@@ -3735,7 +3737,7 @@ header {
 
 .level-card.current .level-status {
     background: #ffc107;
-    color: #333;
+    color: var(--color-text-primary);
 }
 
 .level-card.locked .level-status {
@@ -3833,9 +3835,9 @@ body.force-portrait-lock::after {
     width: 90%;
     max-width: 400px;
     padding: 30px;
-    background: white;
+    background: var(--color-bg-main);
     border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-xl);
     z-index: 99999;
     display: flex;
     flex-direction: column;
@@ -3845,7 +3847,7 @@ body.force-portrait-lock::after {
     font-family: 'Poppins', sans-serif;
     font-size: 1.2em;
     font-weight: 600;
-    color: #667eea;
+    color: var(--color-primary);
     white-space: pre-line;
     line-height: 1.8;
 }
@@ -3882,9 +3884,9 @@ body.force-portrait-lock::after {
         width: 90%;
         max-width: 400px;
         padding: 30px;
-        background: white;
+        background: var(--color-bg-main);
         border-radius: 20px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        box-shadow: var(--shadow-xl);
         z-index: 99999;
         display: flex;
         flex-direction: column;
@@ -3894,7 +3896,7 @@ body.force-portrait-lock::after {
         font-family: 'Poppins', sans-serif;
         font-size: 1.2em;
         font-weight: 600;
-        color: #667eea;
+        color: var(--color-primary);
         white-space: pre-line;
         line-height: 1.8;
     }
@@ -4168,7 +4170,7 @@ body.force-portrait-lock::after {
     /* Operation Pills - Lift and highlight */
     .operation-pill:hover {
         background: rgba(102, 126, 234, 0.15);
-        color: #667eea;
+        color: var(--color-primary);
         transform: translateY(-2px);
     }
     
