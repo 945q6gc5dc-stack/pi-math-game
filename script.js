@@ -839,9 +839,40 @@ function displayProfiles() {
 
         profileList.appendChild(card);
     });
+
+    // Update add profile button state based on profile count
+    updateAddProfileButton();
+}
+
+// Maximum number of profiles allowed
+const MAX_PROFILES = 4;
+
+// Update the Add Profile button based on current profile count
+function updateAddProfileButton() {
+    const addProfileBtn = document.getElementById('add-profile-btn');
+    const profileCount = Object.keys(profiles).length;
+
+    if (profileCount >= MAX_PROFILES) {
+        addProfileBtn.disabled = true;
+        addProfileBtn.textContent = `Maximum ${MAX_PROFILES} Profiles Reached`;
+        addProfileBtn.style.opacity = '0.5';
+        addProfileBtn.style.cursor = 'not-allowed';
+    } else {
+        addProfileBtn.disabled = false;
+        addProfileBtn.textContent = '+ Add New Profile';
+        addProfileBtn.style.opacity = '1';
+        addProfileBtn.style.cursor = 'pointer';
+    }
 }
 
 function openProfileModal() {
+    // Check profile limit before opening modal
+    const profileCount = Object.keys(profiles).length;
+    if (profileCount >= MAX_PROFILES) {
+        alert(`You can only create a maximum of ${MAX_PROFILES} profiles.`);
+        return;
+    }
+
     profileModal.classList.remove('hidden');
     profileNameInput.value = '';
     profileNameInput.focus();
