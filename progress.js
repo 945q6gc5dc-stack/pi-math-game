@@ -71,7 +71,18 @@ function initialize() {
 
     // Event listeners
     backToGameBtn.addEventListener('click', () => {
-        window.location.href = 'index.html';
+        // Get URL parameters to determine where to return
+        const urlParams = new URLSearchParams(window.location.search);
+        const source = urlParams.get('source') || 'start'; // default to start screen
+        const profileId = urlParams.get('profile');
+
+        // Navigate back with context
+        if (profileId) {
+            window.location.href = `index.html?source=${source}&profile=${profileId}`;
+        } else {
+            // Fallback if no profile ID
+            window.location.href = 'index.html';
+        }
     });
 
     generateAIBtn.addEventListener('click', generateAIInsights);

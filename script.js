@@ -137,7 +137,129 @@ let profileToDelete = null;
 // Initialize the game
 function init() {
     loadProfiles();
-    displayProfiles();
+
+    // Check if returning from progress page with context
+    const urlParams = new URLSearchParams(window.location.search);
+    const source = urlParams.get('source');
+    const profileId = urlParams.get('profile');
+
+    if (source && profileId && profiles[profileId]) {
+        // Auto-load the profile - this handles showing game container
+        selectProfile(profileId);
+
+        // Navigate to the correct screen based on source
+        if (source === 'quiz') {
+            // Show quiz screen (user was mid-quiz)
+            startScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+
+            // Show score-board during quiz
+            const playerInfoRow = document.querySelector('.player-info-row');
+            if (playerInfoRow) playerInfoRow.style.display = 'none';
+            if (scoreBoardRow) scoreBoardRow.style.display = 'flex';
+            if (viewMapBtnStart) viewMapBtnStart.classList.add('hidden');
+
+            // Restore quiz state from sessionStorage
+            const savedQuiz = sessionStorage.getItem('pi-quiz-state');
+            if (savedQuiz) {
+                const quizData = JSON.parse(savedQuiz);
+
+                // Restore quiz variables
+                currentQuestion = quizData.currentQuestion;
+                quizCorrect = quizData.quizCorrect;
+                quizScore = quizData.quizScore;
+                quizAttempted = quizData.quizAttempted;
+                currentStreak = quizData.currentStreak;
+                timeRemaining = quizData.timeRemaining;
+
+                // Update displays
+                progressDisplay.textContent = `${currentQuestion}/10`;
+                scoreDisplay.textContent = quizScore;
+
+                // Restart timer from saved time
+                startTimer();
+
+                // Show next question
+                showNextQuestion();
+
+                // Clean up sessionStorage
+                sessionStorage.removeItem('pi-quiz-state');
+            }
+        } else if (source === 'results') {
+            // Show results screen (user was viewing results)
+            startScreen.classList.add('hidden');
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const playerInfoRow = document.querySelector('.player-info-row');
+            if (playerInfoRow) playerInfoRow.style.display = 'flex';
+            if (scoreBoardRow) scoreBoardRow.style.display = 'none';
+            if (viewMapBtnStart) viewMapBtnStart.classList.add('hidden');
+
+            // Restore results screen data from sessionStorage
+            const savedResults = sessionStorage.getItem('pi-results-state');
+            if (savedResults) {
+                const resultsData = JSON.parse(savedResults);
+
+                // Restore quiz results variables
+                quizCorrect = resultsData.quizCorrect;
+                quizScore = resultsData.quizScore;
+                currentLevel = resultsData.currentLevel;
+                maxLevelAchieved = resultsData.maxLevelAchieved;
+
+                // Update result displays
+                const accuracy = Math.round((quizCorrect / 10) * 100);
+                quizCorrectDisplay.textContent = `${quizCorrect}/10`;
+                quizScoreDisplay.textContent = quizScore;
+                quizAccuracyDisplay.textContent = `${accuracy}%`;
+
+                // Restore crowns display
+                const crownsEarned = resultsData.crownsEarned;
+                crownsEarnedDisplay.innerHTML = '';
+                if (crownsEarned > 0) {
+                    crownRewardContainer.style.display = 'block';
+
+                    // Add "Crowns Collected:" label
+                    const label = document.createElement('span');
+                    label.textContent = 'Crowns Collected: ';
+                    label.className = 'crowns-label';
+                    crownsEarnedDisplay.appendChild(label);
+
+                    // Create crown container with badge
+                    const crownContainer = document.createElement('div');
+                    crownContainer.className = 'crown-collected-container';
+
+                    // Add crown image
+                    const crownImg = document.createElement('img');
+                    crownImg.src = 'avatars/crown.png';
+                    crownImg.alt = 'Crown';
+                    crownImg.className = 'crown-collected-icon';
+                    crownContainer.appendChild(crownImg);
+
+                    // Add badge with count
+                    const badge = document.createElement('div');
+                    badge.className = 'crown-collected-badge';
+                    badge.textContent = crownsEarned;
+                    crownContainer.appendChild(badge);
+
+                    crownsEarnedDisplay.appendChild(crownContainer);
+                } else {
+                    crownRewardContainer.style.display = 'none';
+                }
+
+                // Clean up sessionStorage
+                sessionStorage.removeItem('pi-results-state');
+            }
+        }
+        // For 'start' source, selectProfile() already shows start screen by default
+
+        // Clean URL (removes parameters from address bar)
+        window.history.replaceState({}, document.title, 'index.html');
+    } else {
+        // Normal initialization - show profile selection
+        displayProfiles();
+    }
 
     addProfileBtn.addEventListener('click', openProfileModal);
     createProfileBtn.addEventListener('click', createProfile);
@@ -149,7 +271,7 @@ function init() {
         changeProfileBtnMobile.addEventListener('click', switchProfile);
     }
     if (viewProgressBtnMobile) {
-        viewProgressBtnMobile.addEventListener('click', showProgressSummary);
+        viewProgressBtnMobile.addEventListener('click', navigateToProgress);
     }
 
     // π navigation buttons - navigate back to profile selection
@@ -199,20 +321,7 @@ function init() {
 
     // Desktop progress button (with null check)
     if (viewProgressBtnDesktop) {
-        viewProgressBtnDesktop.addEventListener('click', () => {
-            if (currentProfile) {
-                // Save AI agent data before navigating
-                if (aiAgent) {
-                    const aiData = aiAgent.saveToProfile();
-                    profiles[currentProfile] = {
-                        ...profiles[currentProfile],
-                        ...aiData
-                    };
-                    saveProfiles();
-                }
-                window.location.href = `progress.html?profile=${currentProfile}`;
-            }
-        });
+        viewProgressBtnDesktop.addEventListener('click', navigateToProgress);
     }
 
     // Grade selector is now display-only - users cannot manually change grades
@@ -1067,6 +1176,59 @@ function showProgressSummary() {
     alert(message);
 }
 
+function navigateToProgress() {
+    if (!currentProfile) return;
+
+    // ALWAYS save profile data first to ensure all progress is persisted
+    // This is critical - without this, navigating from start screen loses data
+    saveProfileData();
+
+    // Determine current screen for context-aware return navigation
+    const quizScreen = document.getElementById('quiz-screen');
+    const resultsScreen = document.getElementById('results-screen');
+
+    let source = 'start'; // default
+    if (quizScreen && !quizScreen.classList.contains('hidden')) {
+        source = 'quiz';
+
+        // Save current quiz state to sessionStorage
+        sessionStorage.setItem('pi-quiz-state', JSON.stringify({
+            currentQuestion: currentQuestion,
+            quizCorrect: quizCorrect,
+            quizScore: quizScore,
+            quizAttempted: quizAttempted,
+            currentStreak: currentStreak,
+            timeRemaining: timeRemaining
+        }));
+    } else if (resultsScreen && !resultsScreen.classList.contains('hidden')) {
+        source = 'results';
+
+        // Save results screen state to sessionStorage
+        const crownsEarnedElement = document.querySelector('.crown-collected-badge');
+        const crownsEarned = crownsEarnedElement ? parseInt(crownsEarnedElement.textContent) : 0;
+
+        sessionStorage.setItem('pi-results-state', JSON.stringify({
+            quizCorrect: quizCorrect,
+            quizScore: quizScore,
+            crownsEarned: crownsEarned,
+            currentLevel: currentLevel,
+            maxLevelAchieved: maxLevelAchieved
+        }));
+    }
+
+    // Save AI agent data before navigating
+    if (aiAgent) {
+        const aiData = aiAgent.saveToProfile();
+        profiles[currentProfile] = {
+            ...profiles[currentProfile],
+            ...aiData
+        };
+        saveProfiles();
+    }
+
+    window.location.href = `progress.html?profile=${currentProfile}&source=${source}`;
+}
+
 function switchProfile() {
     saveProfileData();
 
@@ -1089,6 +1251,9 @@ function switchProfile() {
     gameContainer.classList.add('hidden');
     // Hide score-board when returning to profile selection
     if (scoreBoardRow) scoreBoardRow.style.display = 'none';
+
+    // Re-display profile cards (critical - without this, cards are missing)
+    displayProfiles();
 }
 
 function saveProfileData() {

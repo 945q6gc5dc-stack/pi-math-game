@@ -393,6 +393,23 @@
     color: var(--color-text-muted);
 }
 
+/* Circular buttons - transparent background to show icon only */
+[data-theme="dark"] .btn-circular {
+    background: transparent !important;
+    box-shadow: none !important; /* Remove shadow as it creates a "ghost" circle */
+}
+
+/* All circular button images - clean display in dark mode */
+[data-theme="dark"] .btn-circular img {
+    /* New images have clean edges - use full size for best visual impact */
+    filter: drop-shadow(0 4px 12px rgba(102, 126, 234, 0.4));
+}
+
+/* Continue/GO button image - bronze/gold glow for navigation arrow */
+[data-theme="dark"] .continue-level-btn-wrapper .btn-circular img {
+    filter: drop-shadow(0 4px 12px rgba(184, 115, 51, 0.6));
+}
+
 /* =============================================================================
    END DARK MODE AVATAR STYLING
    ============================================================================= */

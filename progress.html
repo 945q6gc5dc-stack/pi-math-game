@@ -6,33 +6,36 @@
     <meta name="author" content="Kumar Srinivasan">
     <title>My Progress - Pi Math Game</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><style>text{fill:%23667eea}@media(prefers-color-scheme:dark){text{fill:%23f093fb}}</style><text y=%22.9em%22 font-size=%2290%22>π</text></svg>">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="progress.css">
+
+    <!-- Theme color meta tags -->
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#667eea" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+
+    <!-- FOUC Prevention - Apply theme before CSS loads -->
+    <script>
+        (function() {
+            const saved = localStorage.getItem('pi-app-theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (systemPrefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link rel="stylesheet" href="style.css?v=20260105">
+    <link rel="stylesheet" href="progress.css?v=20260105">
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="logo-container">
-                <div class="logo-left">
-                    <div class="pi-symbol">π</div>
-                    <div class="pi-text">
-                        <h1 class="main-title">
-                            <span class="letter-p">P</span><span class="letter-i">i</span>
-                        </h1>
-                        <div class="pi-value">3.14159265...</div>
-                    </div>
-                </div>
-                <div class="logo-right">
-                    <h2 class="title-main">My Progress</h2>
-                    <p class="title-sub">AI-Powered Learning Insights</p>
-                </div>
-            </div>
-        </header>
-
+        <!-- Streamlined Navigation Bar (theme inherited from main page) -->
         <div class="navigation-bar">
             <button id="back-to-game-btn" class="nav-btn">
                 <span>←</span> Back to Game
             </button>
+            <div class="page-title-section">
+                <h1 class="page-title">My Progress</h1>
+                <p class="page-subtitle">AI-Powered Learning Insights</p>
+            </div>
             <div class="profile-indicator">
                 <span class="profile-label">PLAYER:</span>
                 <span id="progress-player-name" class="profile-name-display"></span>
@@ -161,7 +164,8 @@
         </div>
     </div>
 
-    <script src="ai-agent.js"></script>
-    <script src="progress.js"></script>
+    <script src="theme.js?v=20260105"></script>
+    <script src="ai-agent.js?v=20260105"></script>
+    <script src="progress.js?v=20260105"></script>
 </body>
 </html>
