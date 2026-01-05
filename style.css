@@ -755,7 +755,7 @@ header {
 }
 
 .game-area {
-    background: #f8f9fa;
+    background: var(--color-bg-secondary);
     padding: 18px;
     border-radius: 15px;
     margin-bottom: 15px;
@@ -793,7 +793,7 @@ header {
 .profile-selection {
     text-align: center;
     padding: 25px; /* Reduced from 40px for better fit */
-    background: #f8f9fa;
+    background: var(--color-bg-secondary);
     border-radius: 15px;
     margin-bottom: 30px;
     overflow: visible;
@@ -2508,7 +2508,7 @@ header {
 .stats-panel {
     margin-bottom: 15px;
     padding: 20px;
-    background: #f8f9fa;
+    background: var(--color-bg-secondary);
     border-radius: 15px;
     display: flex;
     flex-direction: column;
