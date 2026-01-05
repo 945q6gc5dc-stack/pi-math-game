@@ -963,7 +963,10 @@ header {
     font-size: 1.3em;
     font-weight: bold;
     margin-bottom: 0;
-    word-break: break-word;
+    /* Changed: Single line with ellipsis instead of wrapping */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     position: relative;
     z-index: 2;
     color: var(--color-text-primary);
@@ -3460,6 +3463,12 @@ header {
         width: 100%;
         max-width: 140px;
     }
+
+    /* Responsive font for profile names on mobile */
+    .profile-card .profile-name {
+        font-size: 1.1em;
+        padding: 10px 16px;
+    }
 }
 
 /* Tablet/Large Mobile (600-900px): 2x2 grid with 140px cards (matches desktop) */
@@ -3486,6 +3495,12 @@ header {
     .profile-card {
         width: 100%;
         max-width: 130px;
+    }
+
+    /* Smaller font for profile names on tiny screens */
+    .profile-card .profile-name {
+        font-size: 1em;
+        padding: 8px 12px;
     }
 
     .profile-selection h3 {
