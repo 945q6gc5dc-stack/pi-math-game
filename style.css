@@ -448,7 +448,7 @@ header {
 .logo-container {
     display: flex; /* Show by default on profile selection screen */
     border-radius: 8px;
-    overflow: visible; /* Changed from hidden to allow toggle button to overflow */
+    overflow: visible; /* Allow button to show */
     max-width: 1200px;
     margin: 0 auto;
     position: relative; /* For absolute positioning of toggle button */
@@ -466,6 +466,7 @@ header {
     align-items: center;
     background: var(--color-bg-main);
     padding: 30px;
+    border-radius: 8px 0 0 8px;
 }
 
 .logo-right {
@@ -477,15 +478,16 @@ header {
     padding: 30px 40px;
     background: var(--gradient-panel);
     gap: 8px;
+    border-radius: 0 8px 8px 0;
 }
 
 /* === THEME TOGGLE BUTTON === */
 .theme-toggle-btn {
     position: absolute;
-    top: 10px;
+    bottom: 10px;
     right: 10px;
-    width: 50px;
-    height: 50px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     border: 2px solid var(--color-border);
     background: var(--color-bg-main);
@@ -493,7 +495,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     box-shadow: var(--shadow-md);
     z-index: 100;
     transition: all 0.3s ease;
@@ -2675,7 +2677,7 @@ header {
     .logo-container {
         flex-direction: row !important; /* Horizontal layout on mobile */
         height: 50px; /* Fixed compact height */
-        border: 1px solid #667eea;
+        border: 1px solid var(--color-primary);
         padding: 0;
         align-items: stretch;
     }
@@ -2686,19 +2688,20 @@ header {
         display: flex;
         justify-content: center;
         align-items: center;
-        background: white;
-        border-right: 1px solid #667eea;
+        background: var(--color-bg-main);
+        border-right: 1px solid var(--color-primary);
         border-bottom: none;
     }
 
     .logo-right {
         flex: 1; /* Take remaining space */
-        padding: 0 12px;
+        padding: 0 45px 0 12px; /* Extra right padding for toggle button */
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        background: linear-gradient(135deg, #e8ebfc 0%, #f5f7ff 100%);
+        background: var(--gradient-panel);
+        border-radius: 0 8px 8px 0;
     }
 
     /* Hide "Pi" text letters but keep π symbol visible */
@@ -2748,6 +2751,25 @@ header {
     /* Hide subtitle "Master Math Through Play!" for ultra-compact design */
     .title-sub {
         display: none;
+    }
+
+    /* Mobile: Theme toggle button - smaller and centered in 50px header */
+    .theme-toggle-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+        border-width: 1.5px;
+        top: 50%;
+        right: 7px;
+        transform: translateY(-50%);
+    }
+
+    .theme-toggle-btn:hover {
+        transform: translateY(-50%) scale(1.05);
+    }
+
+    .theme-toggle-btn:active {
+        transform: translateY(-50%) scale(0.92);
     }
 
     /* Mobile: π container and panel layout */
