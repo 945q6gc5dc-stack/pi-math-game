@@ -2647,6 +2647,30 @@ header {
         height: 70px;
     }
 
+    /* Play Again button wrapper - mobile sizing */
+    .play-again-btn-wrapper {
+        width: 70px;
+        height: 70px;
+        background: transparent !important; /* Ensure no background color */
+    }
+
+    .play-again-btn-wrapper::before {
+        width: 70px;
+        height: 70px;
+    }
+
+    /* Continue/Level Up button wrapper - mobile sizing */
+    .continue-level-btn-wrapper {
+        width: 70px;
+        height: 70px;
+        background: transparent !important; /* Ensure no background color */
+    }
+
+    .continue-level-btn-wrapper::before {
+        width: 70px;
+        height: 70px;
+    }
+
     .btn-circular {
         width: 70px;
         height: 70px;
@@ -2726,10 +2750,12 @@ header {
     /* Compact level action buttons on mobile */
     .level-action-buttons {
         gap: 10px; /* Reduce from 15px */
+        background: transparent !important; /* Ensure no background color */
     }
 
     .button-row {
         gap: 15px; /* Reduce from 20px */
+        background: transparent !important; /* Ensure no background color */
     }
 
     /* MOBILE AVATAR OPTIMIZATION - Target: 90px height */
@@ -2834,7 +2860,8 @@ header {
         margin-top: auto; /* Push to bottom like profile card */
         position: relative;
         z-index: 2; /* Above avatar image */
-        background: rgba(255, 255, 255, 0.85); /* Semi-transparent white background */
+        background: rgba(255, 255, 255, 0.5); /* Match profile card transparency */
+        backdrop-filter: blur(10px); /* Frosted glass effect like profile card */
         border-radius: 0 0 8px 8px; /* Rounded bottom corners */
         text-align: center;
     }
@@ -3407,4 +3434,29 @@ body.force-portrait-lock::after {
         white-space: pre-line;
         line-height: 1.8;
     }
+}
+
+/* ============================================================================
+   π BUTTON VISIBILITY OPTIMIZATION (2026-01-04)
+   Reduce redundancy by hiding π button on start/results screens
+   Keep visible only during quiz for emergency exit
+   ============================================================================ */
+
+/* Hide π button on start screen and results screen (player-info-row) */
+.player-info-row .pi-container {
+    display: none !important;
+}
+
+/* Expand player info panel to fill space when π button is hidden */
+.player-info-row .player-info {
+    flex: 1;
+    width: 100%; /* Ensure full width utilization */
+}
+
+/* Keep π button visible during quiz (score-board-row) but remove shadow */
+.score-board-row .pi-container-quiz {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none; /* Flat appearance, no elevation */
 }
