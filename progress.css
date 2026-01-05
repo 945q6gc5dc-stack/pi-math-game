@@ -38,6 +38,15 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Desktop: Show full text, hide short text */
+.nav-text-short {
+    display: none;
+}
+
+.nav-text-full {
+    display: inline;
+}
+
 /* Page Title Section (center) */
 .page-title-section {
     flex: 1;
@@ -997,7 +1006,16 @@
         white-space: nowrap;
     }
 
-    .nav-btn span {
+    /* Mobile: Show short text, hide full text */
+    .nav-text-full {
+        display: none;
+    }
+
+    .nav-text-short {
+        display: inline;
+    }
+
+    .nav-arrow {
         font-size: 1.2em; /* Keep arrow visible */
     }
 
